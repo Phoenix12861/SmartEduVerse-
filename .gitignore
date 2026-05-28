@@ -1,0 +1,33 @@
+# Compiled class files
+*.class
+
+# Log files
+data/logs/
+*.log
+
+# Database files (PII)
+data/*.db
+
+# Build artifacts
+build/
+bin/
+out/
+dist/
+
+# External Libraries
+# lib/ (I'll keep this as it contains necessary jars for the project to run/build)
+
+# AI Models (large files)
+ollama/models/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Gemini CLI temporary files
+.gemini/
+gemini/
+
+# Executables
+*.exe
+*.jar
