@@ -7,7 +7,7 @@ import java.util.List;
 
 public class SchoolManager {
 
-    // --- SCHOOLS ---
+
     public static List<String> getSchools() {
         List<String> list = new ArrayList<>();
         try (Connection conn = DatabaseManager.connect();
@@ -28,7 +28,7 @@ public class SchoolManager {
         return -1;
     }
 
-    // --- STAFF ---
+
     public static class StaffInfo {
         public String username, role, lastSalaryPaid;
         public int schoolId;
@@ -60,12 +60,12 @@ public class SchoolManager {
         return false;
     }
 
-    // --- STUDENTS ---
+
     public static class StudentInfo {
         public String username, section, status;
         public int id, schoolId, classNumber, repeatClass;
         public double totalFees, feesPaid;
-        public StudentInfo() {} // No-args for pending apps
+        public StudentInfo() {}
         public StudentInfo(int id, int sid, String u, int c, String s, String st, double tf, double fp, int rc) {
             this.id = id; this.schoolId = sid; this.username = u; this.classNumber = c; this.section = s; this.status = st; this.totalFees = tf; this.feesPaid = fp; this.repeatClass = rc;
         }
@@ -95,7 +95,7 @@ public class SchoolManager {
     }
 
     public static boolean enrollStudent(int schoolId, String username, int classNum, String section, double totalFees) {
-        // Check if user exists and is a student
+
         try (Connection conn = DatabaseManager.connect();
              PreparedStatement psCheck = conn.prepareStatement("SELECT role FROM users WHERE username = ?")) {
             psCheck.setString(1, username);
@@ -117,7 +117,7 @@ public class SchoolManager {
         return false;
     }
 
-    // --- TIMETABLES ---
+
     public static class TimetableEntry {
         public int id, period;
         public String day, subject, teacher;
@@ -154,7 +154,7 @@ public class SchoolManager {
         return false;
     }
 
-    // --- EXAM TIMETABLES ---
+
     public static class ExamEntry {
         public String subject, date, time;
         public ExamEntry(String s, String d, String t) { subject = s; date = d; time = t; }
@@ -187,7 +187,7 @@ public class SchoolManager {
         return false;
     }
 
-    // --- HOMEWORK ---
+
     public static boolean assignHomework(int schoolId, int classNum, String section, String subject, String content) {
         try (Connection conn = DatabaseManager.connect();
              PreparedStatement ps = conn.prepareStatement("INSERT INTO school_homework(school_id, class_number, section, subject, content, assigned_date) VALUES(?, ?, ?, ?, ?, ?)")) {
@@ -202,7 +202,7 @@ public class SchoolManager {
         return false;
     }
 
-    // --- ACTIONS ---
+
     public static boolean updateStudentStatus(String username, String status) {
         try (Connection conn = DatabaseManager.connect();
              PreparedStatement ps = conn.prepareStatement("UPDATE school_students SET status = ? WHERE username = ?")) {
@@ -244,7 +244,7 @@ public class SchoolManager {
         return false;
     }
 
-    // --- NEW ENROLLMENT APPLICATIONS ---
+
     public static boolean applyToSchool(String username, int schoolId) {
         try (Connection conn = DatabaseManager.connect();
              PreparedStatement ps = conn.prepareStatement("INSERT INTO school_applications(username, school_id) VALUES(?, ?)")) {
@@ -264,7 +264,7 @@ public class SchoolManager {
             while (rs.next()) {
                 StudentInfo s = new StudentInfo();
                 s.username = rs.getString("username");
-                s.id = rs.getInt("id"); // Reuse ID field for application ID
+                s.id = rs.getInt("id");
                 list.add(s);
             }
         } catch (SQLException e) { e.printStackTrace(); }
@@ -317,7 +317,7 @@ public class SchoolManager {
         return null;
     }
 
-    // --- SALARIES ---
+
     public static boolean approveTransfer(int requestId) {
         try (Connection conn = DatabaseManager.connect()) {
             conn.setAutoCommit(false);
@@ -349,7 +349,7 @@ public class SchoolManager {
         return false;
     }
 
-    // --- SALARIES ---
+
     public static boolean autoPaySalaries() {
         try (Connection conn = DatabaseManager.connect()) {
             conn.setAutoCommit(false);

@@ -122,7 +122,7 @@ public class ResultAnalyzerPanel extends JPanel {
         header.add(title, BorderLayout.CENTER);
         p.add(header, BorderLayout.NORTH);
 
-        // Add Marks Form
+
         JPanel form = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10)); form.setBackground(new Color(250, 250, 250));
         form.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         JTextField subF = styleField("Subject Name", 15);
@@ -132,7 +132,7 @@ public class ResultAnalyzerPanel extends JPanel {
         addBtn.addActionListener(e -> {
             try {
                 if (ResultAnalyzer.setMarks(username, subF.getText(), Double.parseDouble(marksF.getText()), Double.parseDouble(totalF.getText()))) {
-                    showMarkEditor(username); // Refresh
+                    showMarkEditor(username);
                     core.NotificationManager.sendNotification(username, "Marks updated for " + subF.getText(), "ACADEMIC");
                 }
             } catch (Exception ex) { JOptionPane.showMessageDialog(this, "Invalid input."); }
@@ -143,7 +143,7 @@ public class ResultAnalyzerPanel extends JPanel {
         form.add(addLabel); form.add(subF); form.add(marksF); form.add(totalF); form.add(addBtn);
         p.add(form, BorderLayout.SOUTH);
 
-        // List of Marks
+
         String[] cols = {"Subject", "Marks Obtained", "Total Marks", "Percentage", "Actions"};
         DefaultTableModel model = new DefaultTableModel(cols, 0) {
             @Override public boolean isCellEditable(int r, int c) { return false; }
@@ -167,11 +167,11 @@ public class ResultAnalyzerPanel extends JPanel {
                     ResultAnalyzer.MarkEntry me = results.get(row);
                     int opt = JOptionPane.showOptionDialog(null, "Manage marks for " + me.subject, "Action",
                             JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, new String[]{"Edit", "Delete", "Cancel"}, "Edit");
-                    if (opt == 0) { // Edit
+                    if (opt == 0) {
                         subF.setText(me.subject);
                         marksF.setText(String.valueOf(me.marks));
                         totalF.setText(String.valueOf(me.totalMarks));
-                    } else if (opt == 1) { // Delete
+                    } else if (opt == 1) {
                         if (ResultAnalyzer.deleteMarks(username, me.subject)) showMarkEditor(username);
                     }
                 }

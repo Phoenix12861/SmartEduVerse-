@@ -114,7 +114,7 @@ public class ParkingPanel extends JPanel {
     }
 
     private void restoreMainView() {
-        // Clear all except header
+
         Component[] comps = getComponents();
         for (Component c : comps) {
             if (c != header) remove(c);
@@ -291,7 +291,7 @@ public class ParkingPanel extends JPanel {
 
         panel.add(bp, BorderLayout.SOUTH);
 
-        // Replace content
+
         Component[] comps = getComponents();
         for (Component c : comps) {
             if (c != header) remove(c);

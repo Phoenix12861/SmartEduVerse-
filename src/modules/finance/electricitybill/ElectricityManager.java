@@ -20,13 +20,13 @@ public class ElectricityManager {
     }
 
     public static boolean createBill(String user, double units, String dueDate, String admin) {
-        double rate = 8.5; // Example rate per unit
+        double rate = 8.5;
         double amount = units * rate;
 
-        // Limit to 3 bills logic
+
         List<Bill> currentBills = getBills(user);
         if (currentBills.size() >= 3) {
-            // Find a paid bill to delete (oldest first)
+
             for (int i = currentBills.size() - 1; i >= 0; i--) {
                 if ("PAID".equals(currentBills.get(i).status)) {
                     deleteBill(currentBills.get(i).id);

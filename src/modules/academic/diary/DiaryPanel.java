@@ -37,7 +37,7 @@ public class DiaryPanel extends JPanel {
         panel.setBackground(Color.WHITE);
         panel.setBorder(new EmptyBorder(40, 60, 40, 60));
 
-        // --- Header ---
+
         JPanel header = new JPanel(new BorderLayout());
         header.setOpaque(false);
         JLabel title = new JLabel("Personal Diary");
@@ -55,7 +55,7 @@ public class DiaryPanel extends JPanel {
         entryTable.setShowVerticalLines(false);
         entryTable.setGridColor(new Color(240, 240, 240));
         entryTable.setPreferredScrollableViewportSize(new Dimension(960, 330));
-        entryTable.removeColumn(entryTable.getColumnModel().getColumn(0)); // Hide ID
+        entryTable.removeColumn(entryTable.getColumnModel().getColumn(0));
 
         JScrollPane scroll = new JScrollPane(entryTable);
         scroll.setBorder(new LineBorder(new Color(230, 230, 230), 1));
@@ -106,7 +106,7 @@ public class DiaryPanel extends JPanel {
         wrapper.setBackground(Color.WHITE);
         wrapper.setBorder(new EmptyBorder(20, 40, 40, 40));
 
-        // --- Back Bar ---
+
         JPanel topBar = new JPanel(new FlowLayout(FlowLayout.LEFT));
         topBar.setOpaque(false);
         JButton back = new JButton("← Back");

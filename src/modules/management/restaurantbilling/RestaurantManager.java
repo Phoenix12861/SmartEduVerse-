@@ -46,7 +46,7 @@ public class RestaurantManager {
                 int tableId = rs.getInt("id");
                 int tableNum = rs.getInt("table_number");
                 
-                // Get current status based on reservations
+
                 TableStatus status = getTableStatus(tableId);
                 list.add(new TableInfo(tableId, tableNum, status.isOccupied, status.isReserved, status.reservedUntil, status.reservationId, status.currentUser, status.forcePay));
             }
@@ -85,7 +85,7 @@ public class RestaurantManager {
         Reservation upcomingRes = null;
 
         for (Reservation r : reservations) {
-            // Occupied if within 15 mins before or after reservation, or up to 4 hours after (assuming stay)
+
             if (now.isAfter(r.time.minusMinutes(15)) && now.isBefore(r.time.plusMinutes(240))) {
                 isOccupied = true;
                 currentRes = r;
@@ -93,7 +93,7 @@ public class RestaurantManager {
                 reservationId = r.id;
                 reservedUntil = r.time.toString();
                 
-                // Force pay if current stay exceeds 1h 30m
+
                 if (now.isAfter(r.time.plusMinutes(90))) {
                     forcePay = true;
                 }
@@ -124,10 +124,10 @@ public class RestaurantManager {
     }
 
     public static boolean makeReservation(int tableId, String username, String date, String time) {
-        // Limit 3 tables per day
+
         if (getUserReservationCount(username, date) >= 3) return false;
 
-        // Check if table is available at that time
+
         if (!isTableAvailable(tableId, date, time)) return false;
 
         try (Connection conn = DatabaseManager.connect();
@@ -163,7 +163,7 @@ public class RestaurantManager {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 LocalTime resTime = LocalTime.parse(rs.getString("time"));
-                // 2 hours buffer before or after the reservation
+
                 if (newTime.isAfter(resTime.minusMinutes(120)) && newTime.isBefore(resTime.plusMinutes(120))) {
                     return false;
                 }
@@ -192,7 +192,7 @@ public class RestaurantManager {
     }
 
     public static boolean createBillByTable(int restaurantId, int tableNumber, List<BillItem> items) {
-        // Find the user who has a current reservation for this table
+
         String username = getUsernameByTable(restaurantId, tableNumber);
         if (username == null) return false;
 
@@ -335,14 +335,14 @@ public class RestaurantManager {
                     }
                 }
 
-                // Mark bill as paid
+
                 try (PreparedStatement ps = conn.prepareStatement("UPDATE restaurant_bills SET status = 'PAID' WHERE id = ? AND username = ?")) {
                     ps.setInt(1, billId);
                     ps.setString(2, username);
                     ps.executeUpdate();
                 }
 
-                // Vacate table
+
                 if (restaurantId != -1 && tableNumber != -1) {
                     try (PreparedStatement psRes = conn.prepareStatement(
                             "UPDATE restaurant_reservations SET status = 'COMPLETED' " +

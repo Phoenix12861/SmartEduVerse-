@@ -23,7 +23,7 @@ public class TicketManager {
                 System.out.println("New day detected. Refreshing train capacities...");
                 try (Statement stmt = conn.createStatement()) {
                     stmt.executeUpdate("UPDATE trains SET current_occupancy = 0");
-                    // Also maybe clear old tickets? The task didn't specify, but usually occupancy reset means tickets are cleared.
+
                     stmt.executeUpdate("DELETE FROM train_tickets");
                     
                     try (PreparedStatement ps = conn.prepareStatement("UPDATE settings SET last_train_reset = ?")) {
@@ -138,7 +138,7 @@ public class TicketManager {
                         }
                     }
                 } else {
-                    // Notify about delays, etc.
+
                     try (PreparedStatement psTickets = conn.prepareStatement("SELECT username FROM train_tickets WHERE train_id = ? AND status = 'PAID'")) {
                         psTickets.setInt(1, trainId);
                         ResultSet rs = psTickets.executeQuery();

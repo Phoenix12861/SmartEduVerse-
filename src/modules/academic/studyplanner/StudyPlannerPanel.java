@@ -17,19 +17,19 @@ public class StudyPlannerPanel extends JPanel {
         setBackground(Color.WHITE);
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // HEADER
+
         JLabel title = new JLabel("Smart AI Study Planner");
         title.setFont(new Font("SansSerif", Font.BOLD, 26));
         title.setForeground(Color.BLACK);
         add(title, BorderLayout.NORTH);
 
-        // MAIN CONTENT (SPLIT)
+
         JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         split.setDividerLocation(450);
         split.setBackground(Color.WHITE);
         split.setBorder(null);
 
-        // LEFT: Analysis
+
         JPanel left = new JPanel(new BorderLayout(10, 10));
         left.setBackground(Color.WHITE);
         
@@ -61,7 +61,7 @@ public class StudyPlannerPanel extends JPanel {
         });
         left.add(analyzeBtn, BorderLayout.SOUTH);
 
-        // RIGHT: Chatbot
+
         JPanel right = new JPanel(new BorderLayout(10, 10));
         right.setBackground(Color.WHITE);
 

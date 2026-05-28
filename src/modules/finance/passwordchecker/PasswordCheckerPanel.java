@@ -35,16 +35,16 @@ public class PasswordCheckerPanel extends JPanel {
         add(cards, BorderLayout.CENTER);
     }
 
-    // =====================================================
-    // ================= VAULT LIST PANEL ==================
-    // =====================================================
+
+
+
 
     private JPanel createVaultPanel() {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(Color.WHITE);
         panel.setBorder(new EmptyBorder(40, 60, 40, 60));
 
-        // --- Header ---
+
         JPanel header = new JPanel(new BorderLayout());
         header.setOpaque(false);
         JLabel title = new JLabel("Password Vault");
@@ -63,7 +63,7 @@ public class PasswordCheckerPanel extends JPanel {
         header.add(headerBtns, BorderLayout.EAST);
         panel.add(header, BorderLayout.NORTH);
 
-        // --- Content (Table + Actions) ---
+
         vaultModel = new DefaultTableModel(new String[]{"Application", "Last Updated"}, 0) {
             @Override public boolean isCellEditable(int row, int col) { return false; }
         };
@@ -98,19 +98,19 @@ public class PasswordCheckerPanel extends JPanel {
         mainContent.setOpaque(false);
         GridBagConstraints gbc = new GridBagConstraints();
         
-        // Table at the top
+
         gbc.gridx = 0; gbc.gridy = 0;
         gbc.weightx = 1.0; gbc.weighty = 0.0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.NORTH;
         mainContent.add(scroll, gbc);
         
-        // Buttons immediately below
+
         gbc.gridy = 1;
-        gbc.insets = new Insets(0, 0, 0, 0); // Reset or adjust as needed
+        gbc.insets = new Insets(0, 0, 0, 0);
         mainContent.add(actions, gbc);
         
-        // Filler to push everything up
+
         gbc.gridy = 2;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.VERTICAL;
@@ -122,9 +122,9 @@ public class PasswordCheckerPanel extends JPanel {
         return panel;
     }
 
-    // =====================================================
-    // ================= ADD APP & GENERATE ================
-    // =====================================================
+
+
+
 
     private JPanel createAddAppPanel() {
         JPanel wrapper = new JPanel(new BorderLayout());
@@ -168,7 +168,7 @@ public class PasswordCheckerPanel extends JPanel {
         passField.setAlignmentX(Component.CENTER_ALIGNMENT);
         passField.setBorder(BorderFactory.createTitledBorder("PASSWORD"));
 
-        // Generator Section
+
         JPanel genBox = new JPanel();
         genBox.setLayout(new BoxLayout(genBox, BoxLayout.Y_AXIS));
         genBox.setBackground(new Color(250, 250, 250));
@@ -248,9 +248,9 @@ public class PasswordCheckerPanel extends JPanel {
         return wrapper;
     }
 
-    // =====================================================
-    // ================= LOGIC & DATABASE ==================
-    // =====================================================
+
+
+
 
     private void refreshVault() {
         if (vaultModel == null) return;
@@ -300,7 +300,7 @@ public class PasswordCheckerPanel extends JPanel {
             return;
         }
 
-        // Fetch Password
+
         String currentPass = "";
         try (Connection conn = DatabaseManager.connect();
              PreparedStatement ps = conn.prepareStatement("SELECT app_password FROM vault WHERE username = ? AND app_name = ?")) {

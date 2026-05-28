@@ -59,7 +59,7 @@ public class TypingEngine {
     private int totalCorrectChars = 0;
     private int totalIncorrectChars = 0;
 
-    // Prepare the test (generate words but don't start the clock)
+
     public void prepareTest(Mode mode, Difficulty diff, int limit) {
         generateContent(mode, diff, limit);
         typedWords = new ArrayList<>(Collections.nCopies(targetWords.size(), ""));
@@ -70,7 +70,7 @@ public class TypingEngine {
         isPrepared = true;
     }
 
-    // Start the clock
+
     public void startTest() {
         if (!isPrepared) return;
         startTime = System.currentTimeMillis();

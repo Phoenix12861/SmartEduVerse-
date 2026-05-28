@@ -18,7 +18,7 @@ public class ModuleCard extends JPanel {
         setCursor(new Cursor(Cursor.HAND_CURSOR));
         setLayout(new BorderLayout());
 
-        // Smaller cards
+
         setPreferredSize(
                 new Dimension(
                         DashboardSettings.CARD_WIDTH,
@@ -41,7 +41,7 @@ public class ModuleCard extends JPanel {
 
             ImageIcon icon = new ImageIcon(imagePath);
 
-            // Balanced icon size
+
         Image scaled = icon.getImage().getScaledInstance(
                 DashboardSettings.ICON_SIZE,
                 DashboardSettings.ICON_SIZE,
@@ -112,14 +112,14 @@ public class ModuleCard extends JPanel {
 
         int offset = pressed ? 4 : (hovered ? 2 : 0);
 
-        // Glow (Selective based on theme)
+
         if (hovered) {
             Color glowColor = (core.ThemeManager.getHomeColor().equals("DARK")) ? new Color(255, 255, 255, 30) : new Color(0, 0, 0, 20);
             g2.setColor(glowColor);
             g2.fillRoundRect(-2, -2 + offset, getWidth()-6, getHeight()-6, 28, 28);
         }
 
-        // Main card box
+
         Color cardBg = core.ThemeManager.getCardBackground();
         g2.setColor(cardBg);
 
@@ -132,7 +132,7 @@ public class ModuleCard extends JPanel {
                 26
         );
 
-        // Border
+
         g2.setColor(core.ThemeManager.getHomeColor().equals("DARK") ? Color.DARK_GRAY : Color.BLACK);
         g2.setStroke(new BasicStroke(1.5f));
         g2.drawRoundRect(0, offset, getWidth()-12, getHeight()-12, 26, 26);

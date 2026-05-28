@@ -281,7 +281,7 @@ switch(status) {
         panel.setBackground(new Color(245, 245, 245));
         panel.setBorder(new EmptyBorder(30, 40, 30, 40));
 
-        // --- Header ---
+
         JPanel header = new JPanel(new BorderLayout());
         header.setOpaque(false);
         JLabel title = new JLabel("Banking Dashboard");
@@ -306,7 +306,7 @@ switch(status) {
         header.add(headerButtons, BorderLayout.EAST);
         panel.add(header, BorderLayout.NORTH);
 
-        // --- Centered Content Area ---
+
         JPanel contentArea = new JPanel(new GridBagLayout());
         contentArea.setOpaque(false);
         GridBagConstraints gbc = new GridBagConstraints();
@@ -339,7 +339,7 @@ switch(status) {
         lastPurchaseLabel.setFont(new Font("SansSerif", Font.BOLD, 22));
         grid.add(createDashboardBox("LAST TRANSACTION", lastPurchaseLabel));
 
-        // Add grid to contentArea and anchor to North
+
         gbc.gridx = 0; gbc.gridy = 0;
         gbc.weightx = 1.0; gbc.weighty = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -408,9 +408,9 @@ switch(status) {
             new EmptyBorder(30,40,30,40)
     );
 
-    // =====================================================
-    // ================= HEADER ============================
-    // =====================================================
+
+
+
 
     JPanel header =
             new JPanel(new BorderLayout());
@@ -441,9 +441,9 @@ switch(status) {
 
     panel.add(header, BorderLayout.NORTH);
 
-    // =====================================================
-    // ================= ACTION GRID =======================
-    // =====================================================
+
+
+
 
     JPanel actionsWrapper =
             new JPanel(
@@ -457,9 +457,9 @@ switch(status) {
 
     actionsWrapper.setOpaque(false);
 
-    // =====================================================
-    // ================= CHANGE PASSWORD ===================
-    // =====================================================
+
+
+
 
     actionsWrapper.add(
             createQuickActionBtn(
@@ -471,9 +471,9 @@ switch(status) {
             )
     );
 
-    // =====================================================
-    // ================= TRANSFER MONEY ====================
-    // =====================================================
+
+
+
 
     actionsWrapper.add(
             createQuickActionBtn(
@@ -485,9 +485,9 @@ switch(status) {
             )
     );
 
-    // =====================================================
-    // ================= FREEZE / UNFREEZE ================
-    // =====================================================
+
+
+
 
     String currentStatus =
             BankAccountManager.getStatus(username);
@@ -573,9 +573,9 @@ switch(status) {
 
     actionsWrapper.add(freezeBtn);
 
-    // =====================================================
-    // ================= TERMINATE =========================
-    // =====================================================
+
+
+
 
     actionsWrapper.add(
             createQuickActionBtn(
@@ -588,9 +588,9 @@ switch(status) {
             )
     );
 
-    // =====================================================
-    // ================= CENTER CONTAINER ==================
-    // =====================================================
+
+
+
 
     JPanel centerContainer =
             new JPanel(
@@ -618,9 +618,9 @@ switch(status) {
             gbc
     );
 
-    // =====================================================
-    // ================= VIEW LOGS =========================
-    // =====================================================
+
+
+
 
     if(
             SessionManager.getCurrentRole()
@@ -887,12 +887,12 @@ switch(status) {
         JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
         card.setBackground(Color.WHITE);
-        // ORIGINAL STYLE: Light border
+
         card.setBorder(BorderFactory.createCompoundBorder(
             new LineBorder(new Color(230, 230, 230), 1),
             new EmptyBorder(12, 18, 12, 18)
         ));
-        // Reset width (let Grid fill), set Height to 95px (40% reduction from ~160px)
+
         card.setPreferredSize(new Dimension(0, 95));
 
         JLabel t = new JLabel(title);

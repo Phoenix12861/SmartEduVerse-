@@ -31,7 +31,7 @@ public class SettingsPanel extends JPanel {
         JTabbedPane tabs = new JTabbedPane();
         tabs.setFont(new Font("SansSerif", Font.BOLD, 14));
 
-        // TAB 1: APPEARANCE
+
         JPanel appearanceTab = new JPanel();
         appearanceTab.setLayout(new BoxLayout(appearanceTab, BoxLayout.Y_AXIS));
         appearanceTab.setBackground(Color.WHITE);
@@ -44,7 +44,7 @@ public class SettingsPanel extends JPanel {
         appearanceTab.add(createOptionRow("Homepage Style", createHomeBox(frame)));
         tabs.addTab("Appearance", appearanceTab);
 
-        // TAB 2: AI CONFIG
+
         JPanel aiTab = new JPanel();
         aiTab.setLayout(new BoxLayout(aiTab, BoxLayout.Y_AXIS));
         aiTab.setBackground(Color.WHITE);
@@ -74,7 +74,7 @@ public class SettingsPanel extends JPanel {
 
         tabs.addTab("AI Configuration", aiTab);
 
-        // TAB 3: SECURITY
+
         JPanel securityTab = new JPanel();
         securityTab.setLayout(new BoxLayout(securityTab, BoxLayout.Y_AXIS));
         securityTab.setBackground(Color.WHITE);

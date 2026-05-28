@@ -61,7 +61,7 @@ public class RoleManagerDialog extends JDialog {
         rightPanel.add(resetPassBtn);
         add(rightPanel, BorderLayout.EAST);
 
-        // ================= BOTTOM CREATE PANEL =================
+
 
         JPanel bottomPanel = new JPanel(new GridLayout(2,4,12,12));
         bottomPanel.setBackground(new Color(245,245,245));
@@ -91,7 +91,7 @@ public class RoleManagerDialog extends JDialog {
 
         add(bottomPanel, BorderLayout.SOUTH);
 
-        // ================= ACTIONS =================
+
 
         createBtn.addActionListener(e -> {
             if(userField.getText().isBlank() || passField.getText().isBlank()) {

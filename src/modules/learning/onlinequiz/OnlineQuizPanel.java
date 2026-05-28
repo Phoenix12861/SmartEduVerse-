@@ -93,7 +93,7 @@ public class OnlineQuizPanel extends JPanel {
                         String optText = parts[i].trim();
                         String letter = String.valueOf((char)('A' + i - 1));
                         
-                        // Fix "A)A)" duplication: if it already starts with "A)", don't add it again
+
                         String prefix = letter + ")";
                         if (!optText.toUpperCase().startsWith(prefix)) {
                             optText = prefix + " " + optText;
@@ -102,7 +102,7 @@ public class OnlineQuizPanel extends JPanel {
                         JButton btn = styleBtn(optText);
                         String finalLetter = letter;
                         btn.addActionListener(ae -> {
-                            // Extract letter from button text or use finalLetter
+
                             if (finalLetter.equals(correctAnswer)) {
                                 statusLbl.setText("CORRECT! Well done.");
                                 btn.setBackground(new Color(0, 120, 0));

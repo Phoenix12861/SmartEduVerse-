@@ -128,7 +128,7 @@ public class TrainReservationPanel extends JPanel {
         if (from == null || to == null) return;
         
         if (from.id == to.id) {
-            // No error message, just empty table as requested
+
             return;
         }
 
@@ -162,7 +162,7 @@ public class TrainReservationPanel extends JPanel {
         int choice = JOptionPane.showOptionDialog(this, "Admin Tools", "Admin",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 
-        if (choice == 0) { // Start Train
+        if (choice == 0) {
             int row = trainTable.getSelectedRow();
             if (row < 0) { JOptionPane.showMessageDialog(this, "Select a train from the table first."); return; }
             TicketManager.TrainInfo train = currentTrains.get(row);
@@ -170,7 +170,7 @@ public class TrainReservationPanel extends JPanel {
                 JOptionPane.showMessageDialog(this, "Train " + train.name + " has started.");
                 refreshTrains();
             }
-        } else if (choice == 1) { // Delay/Cancel
+        } else if (choice == 1) {
             int row = trainTable.getSelectedRow();
             if (row < 0) { JOptionPane.showMessageDialog(this, "Select a train from the table first."); return; }
             TicketManager.TrainInfo train = currentTrains.get(row);

@@ -20,7 +20,7 @@ public class TypingSpeedPanel extends JPanel {
     private int timeLeft = 30;
     private List<Integer> wpmHistory = new ArrayList<>();
 
-    // Theme Colors
+
     private Color bg;
     private Color mainText;
     private Color subText;
@@ -51,7 +51,7 @@ public class TypingSpeedPanel extends JPanel {
         setBackground(bg);
         setBorder(new EmptyBorder(40, 60, 40, 60));
 
-        // ================= HEADER =================
+
         JPanel header = new JPanel(new BorderLayout());
         header.setOpaque(false);
 
@@ -74,7 +74,7 @@ public class TypingSpeedPanel extends JPanel {
         leftControls.add(restartBtn);
         header.add(leftControls, BorderLayout.WEST);
 
-        // Center: Time Selector
+
         JPanel centerHeader = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
         centerHeader.setOpaque(false);
         JLabel timeIcon = new JLabel("🕒");
@@ -97,7 +97,7 @@ public class TypingSpeedPanel extends JPanel {
 
         add(header, BorderLayout.NORTH);
 
-        // ================= CENTER =================
+
         JPanel centerPanel = new JPanel(new GridBagLayout());
         centerPanel.setOpaque(false);
         GridBagConstraints gbc = new GridBagConstraints();
@@ -105,7 +105,7 @@ public class TypingSpeedPanel extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1;
 
-        // Timer Display
+
         timerLabel = new JLabel(timeLeft + "s");
         timerLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 48));
         timerLabel.setForeground(accent);
@@ -113,7 +113,7 @@ public class TypingSpeedPanel extends JPanel {
         gbc.gridy = 0;
         centerPanel.add(timerLabel, gbc);
 
-        // 3-Line Text Display Box
+
         displayPane = new JTextPane();
         displayPane.setEditable(false);
         displayPane.setBackground(bg);
@@ -155,7 +155,7 @@ public class TypingSpeedPanel extends JPanel {
 
         add(centerPanel, BorderLayout.CENTER);
 
-        // ================= FOOTER =================
+
         JPanel footer = new JPanel(new FlowLayout(FlowLayout.CENTER));
         footer.setOpaque(false);
         JLabel hint = new JLabel("press Tab to restart | Stats will show after test");
@@ -164,7 +164,7 @@ public class TypingSpeedPanel extends JPanel {
         footer.add(hint);
         add(footer, BorderLayout.SOUTH);
 
-        // Prepare engine
+
         engine.prepareTest(TypingEngine.Mode.WORDS, TypingEngine.Difficulty.MEDIUM, 100);
         updateDisplay();
 

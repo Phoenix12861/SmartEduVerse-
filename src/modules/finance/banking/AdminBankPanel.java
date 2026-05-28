@@ -26,7 +26,7 @@ public class AdminBankPanel extends JPanel {
         setBackground(new Color(245, 245, 245));
         setBorder(new EmptyBorder(30, 40, 30, 40));
 
-        // ================= HEADER =================
+
         JPanel header = new JPanel(new BorderLayout());
         header.setOpaque(false);
 
@@ -48,13 +48,13 @@ public class AdminBankPanel extends JPanel {
         header.add(headerButtons, BorderLayout.EAST);
         add(header, BorderLayout.NORTH);
 
-        // ================= MAIN CONTENT =================
+
         JPanel mainContent = new JPanel();
         mainContent.setLayout(new BoxLayout(mainContent, BoxLayout.Y_AXIS));
         mainContent.setOpaque(false);
         mainContent.setBorder(new EmptyBorder(30, 0, 0, 0));
 
-        // 1. Unified Table (Edge-to-Edge)
+
         adminModel = new DefaultTableModel(new String[]{"Username", "Balance", "Status", "Role"}, 0) {
             @Override public boolean isCellEditable(int row, int col) { return false; }
         };
@@ -64,11 +64,11 @@ public class AdminBankPanel extends JPanel {
         scroll.setBorder(null);
         scroll.setOpaque(false);
         scroll.getViewport().setOpaque(false);
-        scroll.setPreferredSize(new Dimension(900, 300)); // Larger
+        scroll.setPreferredSize(new Dimension(900, 300));
         scroll.setMaximumSize(new Dimension(Integer.MAX_VALUE, 300));
         mainContent.add(scroll);
         
-        // 2. Centered Actions (No Label, No Box)
+
         JPanel btnWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
         btnWrapper.setOpaque(false);
         btnWrapper.setBorder(new EmptyBorder(30, 0, 0, 0));
@@ -138,8 +138,8 @@ public class AdminBankPanel extends JPanel {
         if (currentStatus.equals("TERMINATED") || currentStatus.contains("REQ appeal")) {
             String terminator = BankAccountManager.getTerminatedBy(targetUser);
             if (terminator == null && currentStatus.contains("REQ appeal")) {
-                // If it was frozen appeal, it might not have terminated_by set yet if it was self-frozen?
-                // But user said "appeal page same like in termination page" - we should check who froze it.
+
+
                 terminator = BankAccountManager.getApprovedBy(targetUser);
             }
             if (SessionManager.getCurrentRole() != UserRole.OWNER && terminator != null && !currentUser.equals(terminator)) {
@@ -194,8 +194,8 @@ public class AdminBankPanel extends JPanel {
         String targetRole = adminModel.getValueAt(row, 3).toString();
         String currentUser = SessionManager.getCurrentUser();
 
-        // Restriction: Only Owner can add balance to their own account.
-        // Others cannot add balance to their own account.
+
+
         if (targetUser.equals(currentUser)) {
             if (SessionManager.getCurrentRole() != UserRole.OWNER) {
                 JOptionPane.showMessageDialog(this, "Only Owner can adjust their own balance.");
@@ -266,7 +266,7 @@ public class AdminBankPanel extends JPanel {
 
     private JTable createStyledTable(DefaultTableModel model) {
         JTable table = new JTable(model);
-        table.setRowHeight(40); // Bigger rows for professional look
+        table.setRowHeight(40);
         table.setFont(new Font("SansSerif", Font.PLAIN, 14));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setShowVerticalLines(false);

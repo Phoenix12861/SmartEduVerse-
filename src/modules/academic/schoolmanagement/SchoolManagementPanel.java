@@ -68,7 +68,7 @@ public class SchoolManagementPanel extends JPanel {
         contentArea.revalidate(); contentArea.repaint();
     }
 
-    // --- OWNER UI ---
+
     private void initOwnerUI() {
         addSidebarButton("Manage Schools", e -> showOwnerSchools());
         addSidebarButton("Appoint Staff", e -> showOwnerAppoint());
@@ -136,7 +136,7 @@ public class SchoolManagementPanel extends JPanel {
         showInContent(p);
     }
 
-    // --- PRINCIPAL UI ---
+
     private void initPrincipalUI() {
         addSidebarButton("Admission Requests", e -> showPrincipalApplications());
         addSidebarButton("Add Student", e -> showPrincipalAddStudent());
@@ -321,7 +321,7 @@ public class SchoolManagementPanel extends JPanel {
         showInContent(p);
     }
 
-    // --- TEACHER UI ---
+
     private void initTeacherUI() {
         addSidebarButton("My Timetable", e -> showTeacherTimetable());
         addSidebarButton("Take Attendance", e -> showTeacherAttendance());
@@ -422,7 +422,7 @@ public class SchoolManagementPanel extends JPanel {
         showInContent(p);
     }
 
-    // --- STUDENT UI ---
+
     private void initStudentUI() {
         if (currentStudent.status.equals("TC_ISSUED")) {
             showTCAlert();
@@ -541,7 +541,7 @@ public class SchoolManagementPanel extends JPanel {
         showInContent(p);
     }
 
-    // --- HELPERS ---
+
     private JPanel createContentPanel(String title) {
         JPanel p = new JPanel(new BorderLayout(10, 10));
         p.setBackground(Color.WHITE);

@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class UserManager {
 
-    // ================= LOGIN =================
+
 
     public static boolean authenticate(
             String username,
@@ -38,7 +38,7 @@ public class UserManager {
         return false;
     }
 
-    // ================= GET ROLE =================
+
 
     public static UserRole getRole(String username) {
 
@@ -69,7 +69,7 @@ public class UserManager {
         return UserRole.USER;
     }
 
-    // ================= CREATE USER =================
+
 
     public static void createUser(
             String username,
@@ -97,7 +97,7 @@ public class UserManager {
         }
     }
 
-    // ================= DELETE USER =================
+
 
     public static void deleteUser(String username) {
 
@@ -119,7 +119,7 @@ public class UserManager {
         }
     }
 
-    // ================= UPDATE ROLE =================
+
 
     public static void updateRole(
             String username,
@@ -145,7 +145,7 @@ public class UserManager {
         }
     }
 
-    // ================= RESET PASSWORD =================
+
 
     public static void resetPassword(
             String username,
@@ -171,7 +171,7 @@ public class UserManager {
         }
     }
 
-    // ================= GET ALL USERS =================
+
 
     public static Map<String, UserRole> getAllUsers() {
 

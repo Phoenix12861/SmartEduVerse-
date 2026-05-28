@@ -17,7 +17,7 @@ public class DashboardFrame extends JFrame {
         HeaderPanel header = new HeaderPanel();
         SidebarPanel sidebar = new SidebarPanel(this);
 
-        // Initialize FIRST
+
         contentPanel = new JPanel(new BorderLayout());
         contentPanel.setBackground(core.ThemeManager.getHomeBackground());
 
@@ -63,7 +63,7 @@ public class DashboardFrame extends JFrame {
 
         contentPanel.add(scrollPane, BorderLayout.CENTER);
 
-        core.ThemeManager.applyTheme(contentPanel); // Apply theme to the new panel tree
+        core.ThemeManager.applyTheme(contentPanel);
         contentPanel.revalidate();
         contentPanel.repaint();
     }

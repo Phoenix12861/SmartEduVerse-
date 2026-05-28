@@ -4,7 +4,7 @@ import java.util.TreeMap;
 
 public class NumberSystemEngine {
 
-    // ================= CONVERSIONS =================
+
 
     public String decimalToBinary(long num) {
         return Long.toBinaryString(num);
@@ -18,7 +18,7 @@ public class NumberSystemEngine {
         return Long.toHexString(num).toUpperCase();
     }
 
-    // ================= WORDS CONVERSION =================
+
 
     private static final String[] units = {
         "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
@@ -69,7 +69,7 @@ public class NumberSystemEngine {
         return words.trim();
     }
 
-    // ================= ROMAN NUMERALS =================
+
 
     private static final TreeMap<Long, String> romanMap = new TreeMap<>();
     static {
@@ -95,7 +95,7 @@ public class NumberSystemEngine {
         return romanMap.get(l) + toRoman(num - l);
     }
 
-    // ================= BITWISE =================
+
 
     public String andOperation(long a, long b) {
         return Long.toBinaryString(a & b);
@@ -109,7 +109,7 @@ public class NumberSystemEngine {
         return Long.toBinaryString(a ^ b);
     }
 
-    // ================= ASCII =================
+
 
     public String toAsciiString(long num) {
         if (num < 0 || num > 255) return "--";

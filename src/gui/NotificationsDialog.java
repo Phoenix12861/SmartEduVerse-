@@ -84,7 +84,7 @@ public class NotificationsDialog extends JDialog {
     }
 
     private void loadNotifications() {
-        // Find the list panel and refresh
+
         Container content = getContentPane();
         for (Component c : content.getComponents()) {
             if (c instanceof JScrollPane) {

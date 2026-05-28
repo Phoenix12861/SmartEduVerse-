@@ -10,9 +10,9 @@ public class BankAccountManager {
     public static final double MAX_DEPOSIT =
             1_000_000_000_000.0;
 
-    // =====================================================
-    // ================= CREATE ACCOUNT ====================
-    // =====================================================
+
+
+
 
     public static boolean createAccount(
             String username,
@@ -25,9 +25,9 @@ public class BankAccountManager {
                         DatabaseManager.connect()
         ) {
 
-            // =================================================
-            // ================= CHECK EXISTING =================
-            // =================================================
+
+
+
 
             PreparedStatement check =
                     conn.prepareStatement(
@@ -43,29 +43,29 @@ public class BankAccountManager {
             ResultSet rs =
                     check.executeQuery();
 
-            // Account already exists
+
 
             if(rs.next()) {
 
                 return false;
             }
 
-            // =================================================
-            // ================= ACCOUNT STATUS =================
-            // =================================================
+
+
+
 
             String status = "PENDING";
 
-            // Owner gets auto approval
+
 
             if(role.equals("OWNER")) {
 
                 status = "APPROVED";
             }
 
-            // =================================================
-            // ================= INSERT ACCOUNT =================
-            // =================================================
+
+
+
 
             PreparedStatement ps =
                     conn.prepareStatement(
@@ -91,7 +91,7 @@ public class BankAccountManager {
 
             ps.setString(4, status);
 
-            // approved_by
+
 
             if(role.equals("OWNER")) {
 
@@ -102,16 +102,16 @@ public class BankAccountManager {
                 ps.setNull(5, Types.VARCHAR);
             }
 
-            // RFID initially null
+
 
             ps.setNull(6, Types.VARCHAR);
 
             int rows =
                     ps.executeUpdate();
 
-            // =================================================
-            // ================= CREATE LOG =====================
-            // =================================================
+
+
+
 
             LogManager.addLog(
                     username,
@@ -130,9 +130,9 @@ public class BankAccountManager {
         }
     }
 
-    // =====================================================
-    // ================= ACCOUNT EXISTS ====================
-    // =====================================================
+
+
+
 
     public static boolean accountExists(
             String username
@@ -167,9 +167,9 @@ public class BankAccountManager {
         }
     }
 
-    // =====================================================
-    // ================= GET BALANCE =======================
-    // =====================================================
+
+
+
 
     public static double getBalance(
             String username
@@ -207,9 +207,9 @@ public class BankAccountManager {
         return 0;
     }
 
-    // =====================================================
-    // ================= GET STATUS ========================
-    // =====================================================
+
+
+
 
     public static String getStatus(
             String username
@@ -247,9 +247,9 @@ public class BankAccountManager {
         return "UNKNOWN";
     }
 
-    // =====================================================
-    // ================= GET APPROVED BY ===================
-    // =====================================================
+
+
+
 
     public static String getApprovedBy(
             String username
@@ -287,9 +287,9 @@ public class BankAccountManager {
         return null;
     }
 
-    // =====================================================
-    // ================= SET STATUS ========================
-    // =====================================================
+
+
+
 
     public static void setStatus(
             String username,
@@ -379,9 +379,9 @@ public class BankAccountManager {
         return null;
     }
 
-    // =====================================================
-    // ================= GET TERMINATION INFO ==============
-    // =====================================================
+
+
+
 
     public static String[] getTerminationInfo(String username) {
         try (Connection conn = DatabaseManager.connect();
@@ -397,9 +397,9 @@ public class BankAccountManager {
         return null;
     }
 
-    // =====================================================
-    // ================= TRANSFER MONEY ====================
-    // =====================================================
+
+
+
 
     public static boolean transferMoney(
             String fromUser,
@@ -409,24 +409,24 @@ public class BankAccountManager {
     ) {
         if (amount <= 0 || fromUser.equals(toUser)) return false;
 
-        // Check if accounts are frozen
+
         if (getStatus(fromUser).equals("FROZEN") || getStatus(fromUser).equals("FROZEN_APPEAL")) return false;
         if (getStatus(toUser).equals("FROZEN") || getStatus(toUser).equals("FROZEN_APPEAL")) return false;
 
         try (Connection conn = DatabaseManager.connect()) {
             conn.setAutoCommit(false);
 
-            // Verify Password
+
             if (!verifyBankPassword(fromUser, password)) return false;
 
-            // Check Balance
+
             double balance = getBalance(fromUser);
             if (balance < amount) return false;
 
-            // Check Target Exists
+
             if (!accountExists(toUser)) return false;
 
-            // Perform Transfer
+
             try (PreparedStatement withdraw = conn.prepareStatement(
                     "UPDATE bank_accounts SET balance = balance - ? WHERE username = ?");
                  PreparedStatement deposit = conn.prepareStatement(
@@ -440,7 +440,7 @@ public class BankAccountManager {
                 deposit.setString(2, toUser);
                 deposit.executeUpdate();
 
-                // Log Transactions
+
                 TransactionManager.addTransaction(conn, fromUser, "TRANSFER_OUT", amount, "To: " + toUser);
                 TransactionManager.addTransaction(conn, toUser, "TRANSFER_IN", amount, "From: " + fromUser);
 
@@ -489,9 +489,9 @@ public class BankAccountManager {
         }
     }
 
-    // =====================================================
-    // ================= VERIFY PASSWORD ===================
-    // =====================================================
+
+
+
 
     public static boolean verifyBankPassword(
             String username,
@@ -532,9 +532,9 @@ public class BankAccountManager {
         return false;
     }
 
-    // =====================================================
-    // ================= CHANGE PASSWORD ===================
-    // =====================================================
+
+
+
 
     public static boolean changePassword(
             String username,
@@ -586,7 +586,7 @@ public class BankAccountManager {
             double amount
     ) throws SQLException {
 
-        // Check current balance if withdrawing
+
         if (amount < 0) {
             double current = 0;
             try (PreparedStatement check = conn.prepareStatement("SELECT balance FROM bank_accounts WHERE username = ?")) {
@@ -607,9 +607,9 @@ public class BankAccountManager {
         }
     }
 
-    // =====================================================
-    // ================= UPDATE BALANCE (STATIC) ===========
-    // =====================================================
+
+
+
 
     public static void updateBalance(
             String username,
@@ -642,9 +642,9 @@ public class BankAccountManager {
         }
     }
 
-    // =====================================================
-    // ================= LAST ACTIVITY =====================
-    // =====================================================
+
+
+
 
     public static String getLastActivity(
             String username
@@ -694,9 +694,9 @@ public class BankAccountManager {
         return "₹ 0.00";
     }
 
-    // =====================================================
-    // ================= FORMAT AMOUNT =====================
-    // =====================================================
+
+
+
 
     public static String formatAmount(
             double amount

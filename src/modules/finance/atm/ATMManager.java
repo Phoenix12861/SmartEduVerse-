@@ -32,7 +32,7 @@ public class ATMManager {
                     TransactionManager.addTransaction(conn, username, "ATM_WITHDRAW", amount, "ATM Withdrawal");
                     LogManager.addLog(conn, username, "ATM_WITHDRAW_SUCCESS", username, "Amount: " + amount);
                     
-                    // Log to specific ATM logs for physical tracking simulation
+
                     logToATMAudit(conn, username, "WITHDRAW", amount);
                     
                     core.NotificationManager.sendNotification(conn, username, "ATM Withdrawal of ₹" + amount + " successful.", "ATM");

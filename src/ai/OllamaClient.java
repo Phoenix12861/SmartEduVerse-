@@ -32,7 +32,7 @@ public class OllamaClient {
 
             conn.setDoOutput(true);
 
-            // ================= JSON =================
+
 
             String json =
                     """
@@ -47,7 +47,7 @@ public class OllamaClient {
                             prompt.replace("\"","\\\"")
                     );
 
-            // ================= SEND =================
+
 
             try(
                     OutputStream os =
@@ -60,7 +60,7 @@ public class OllamaClient {
                 os.write(input,0,input.length);
             }
 
-            // ================= READ =================
+
 
             BufferedReader br =
                     new BufferedReader(
@@ -84,7 +84,7 @@ public class OllamaClient {
 
             br.close();
 
-            // crude extraction
+
 
             String result =
                     response.toString();

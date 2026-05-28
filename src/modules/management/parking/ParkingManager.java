@@ -49,7 +49,7 @@ public class ParkingManager {
     }
 
     public static boolean park(int spotId, String username) {
-        // One slot at a time
+
         if (isUserParking(username)) return false;
 
         try (Connection conn = DatabaseManager.connect()) {
@@ -113,7 +113,7 @@ public class ParkingManager {
                     ps.setInt(1, spotId);
                     ps.executeUpdate();
                 }
-                // Mark as towed in a way we can detect? Maybe a special status or just vacated_at
+
                 try (PreparedStatement ps = conn.prepareStatement("UPDATE parking_occupancy SET vacated_at = CURRENT_TIMESTAMP, username = 'TOWED_' || username WHERE spot_id = ? AND vacated_at IS NULL")) {
                     ps.setInt(1, spotId);
                     ps.executeUpdate();
@@ -188,7 +188,7 @@ public class ParkingManager {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 int id = rs.getInt("id");
-                // Reset it so message shows only once
+
                 try (PreparedStatement psDel = conn.prepareStatement("UPDATE parking_occupancy SET username = ? WHERE id = ?")) {
                     psDel.setString(1, "WAS_TOWED_" + username);
                     psDel.setInt(2, id);

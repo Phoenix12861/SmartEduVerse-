@@ -10,8 +10,8 @@ public class ThemeManager {
     
     private static ThemeMode currentMode = ThemeMode.DEFAULT;
     
-    private static String sidebarStyle = "DARK"; // DARK or LIGHT
-    private static String homeStyle = "LIGHT";   // DARK or LIGHT
+    private static String sidebarStyle = "DARK";
+    private static String homeStyle = "LIGHT";
 
     static {
         loadFromDB();
@@ -111,8 +111,8 @@ public class ThemeManager {
             } else if (c instanceof JScrollPane) {
                 applyTheme((Container) c);
             } else if (c instanceof JPanel) {
-                // Only color panels if they are specifically HomePanel or SidebarPanel
-                // or containers inside them that don't have their own color logic
+
+
                 applyTheme((Container) c);
             } else if (c instanceof Container) {
                 applyTheme((Container) c);

@@ -17,7 +17,7 @@ public class MathQuizPanel extends JPanel {
         setBackground(Color.WHITE);
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // HEADER
+
         JPanel header = new JPanel(new BorderLayout());
         header.setBackground(Color.WHITE);
         
@@ -31,7 +31,7 @@ public class MathQuizPanel extends JPanel {
         
         add(header, BorderLayout.NORTH);
 
-        // QUESTION AREA
+
         questionArea = new JTextArea("Click 'Next Challenge' to begin.");
         questionArea.setEditable(false);
         questionArea.setLineWrap(true);
@@ -45,7 +45,7 @@ public class MathQuizPanel extends JPanel {
         
         add(new JScrollPane(questionArea), BorderLayout.CENTER);
 
-        // BOTTOM CONTROLS
+
         JPanel south = new JPanel(new BorderLayout(10, 10));
         south.setBackground(Color.WHITE);
 
@@ -75,7 +75,7 @@ public class MathQuizPanel extends JPanel {
 
         add(south, BorderLayout.SOUTH);
 
-        // ACTIONS
+
         nextBtn.addActionListener(e -> {
             feedbackArea.setText("");
             answerField.setText("");

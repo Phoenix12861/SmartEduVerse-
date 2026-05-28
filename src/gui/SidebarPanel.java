@@ -73,7 +73,7 @@ public class SidebarPanel extends JPanel {
             frame.switchPanel(new NotificationsPanel(frame));
         });
 
-        // Replace old notifications button if it exists
+
         for (int i = 0; i < getComponentCount(); i++) {
             Component c = getComponent(i);
             if (c instanceof JButton && ((JButton) c).getText().startsWith("Notifications")) {
@@ -136,7 +136,7 @@ public class SidebarPanel extends JPanel {
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) { 
                 if (core.ThemeManager.getSidebarColor().equals("DARK")) {
-                    button.setBackground(new Color(60, 60, 60)); // Even more gray
+                    button.setBackground(new Color(60, 60, 60));
                 } else {
                     button.setBackground(new Color(230, 230, 230)); 
                 }

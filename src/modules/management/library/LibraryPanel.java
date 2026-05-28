@@ -26,14 +26,14 @@ public class LibraryPanel extends JPanel {
         mainContent = new JPanel(cardLayout);
         mainContent.setBackground(Color.WHITE);
 
-        // UI Views
+
         mainContent.add(createBrowseView(), "BROWSE");
         mainContent.add(createBillsView(), "BILLS");
         if (SessionManager.getCurrentRole() != UserRole.STUDENT && SessionManager.getCurrentRole() != UserRole.USER) {
             mainContent.add(createAdminView(), "ADMIN");
         }
 
-        // Header with top-right buttons
+
         JPanel header = new JPanel(new BorderLayout());
         header.setBackground(Color.WHITE);
         header.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
@@ -92,11 +92,11 @@ public class LibraryPanel extends JPanel {
             @Override public boolean isCellEditable(int r, int c) { return false; }
         };
         bookTable = styleTable(new JTable(bookModel));
-        bookTable.removeColumn(bookTable.getColumnModel().getColumn(6)); // Hide real ID
+        bookTable.removeColumn(bookTable.getColumnModel().getColumn(6));
         bookTable.getSelectionModel().addListSelectionListener(e -> updateBorrowButton());
 
         JScrollPane scroll = new JScrollPane(bookTable);
-        scroll.setPreferredSize(new Dimension(720, 400)); // 10% smaller than 800x450 approx
+        scroll.setPreferredSize(new Dimension(720, 400));
         panel.add(scroll, BorderLayout.CENTER);
 
         JPanel actionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -163,13 +163,13 @@ public class LibraryPanel extends JPanel {
 
         JTabbedPane adminTabs = new JTabbedPane();
 
-        // Admin Book Management
+
         JPanel bookMgmt = new JPanel(new BorderLayout(10, 10));
         bookMgmt.setBackground(Color.WHITE);
         String[] bookCols = {"ID", "Title", "Author", "Category", "Qty", "Price", "REAL_ID"};
         adminBookModel = new DefaultTableModel(bookCols, 0);
         JTable table = styleTable(new JTable(adminBookModel));
-        table.removeColumn(table.getColumnModel().getColumn(6)); // Hide real ID
+        table.removeColumn(table.getColumnModel().getColumn(6));
         JScrollPane scroll = new JScrollPane(table);
         scroll.setPreferredSize(new Dimension(650, 400));
         bookMgmt.add(scroll, BorderLayout.CENTER);
@@ -261,7 +261,7 @@ public class LibraryPanel extends JPanel {
         bookMgmt.add(controls, BorderLayout.EAST);
         adminTabs.addTab("Manage Books", bookMgmt);
 
-        // Admin Records & Billing
+
         JPanel recordMgmt = new JPanel(new BorderLayout(10, 10));
         recordMgmt.setBackground(Color.WHITE);
         String[] recCols = {"ID", "User", "Book", "Borrowed", "Due", "Status", "Fine"};
@@ -275,8 +275,8 @@ public class LibraryPanel extends JPanel {
             if (row >= 0) {
                 String user = (String) adminRecModel.getValueAt(row, 1);
                 String book = (String) adminRecModel.getValueAt(row, 2);
-                // Need to find price. For simplicity, ask or get from selected book in management tab.
-                // Or let's just use 500 as default or ask.
+
+
                 String amt = JOptionPane.showInputDialog(this, "Enter Billing Amount for " + user + ":", "500");
                 if (amt != null) {
                     LibraryManager.createBill(user, book, Double.parseDouble(amt));
@@ -363,10 +363,10 @@ public class LibraryPanel extends JPanel {
             int choice = JOptionPane.showConfirmDialog(this, "Buy '" + title + "' for ₹" + price + "?", "Confirm", JOptionPane.YES_NO_OPTION);
             if (choice == JOptionPane.YES_OPTION) {
                 String user = SessionManager.getCurrentUser();
-                // Rule: If not student, create bill. If student, pay now or fail (as per prompt "only if role != Student" for bill creation?)
-                // Actually the prompt says: "create bills who have borrowed a book only if their role != Student"
-                // And "to buy a book let the system keep defined prices"
-                // Let's implement: Non-students get a bill, students must pay now.
+
+
+
+
                 if (SessionManager.getCurrentRole() != UserRole.STUDENT) {
                     LibraryManager.createBill(user, title, price);
                     JOptionPane.showMessageDialog(this, "Bill generated! Pay it in 'My Bills'.");

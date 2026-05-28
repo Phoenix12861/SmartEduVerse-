@@ -29,13 +29,13 @@ public class NumberSystemPanel extends JPanel {
         setBackground(new Color(240, 240, 240));
         setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        // ================= TITLE =================
+
         JLabel title = new JLabel("Number System Explorer");
         title.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 28));
         title.setBorder(new EmptyBorder(0, 0, 15, 0));
         add(title, BorderLayout.NORTH);
 
-        // ================= MAIN CARD =================
+
         JPanel card = new JPanel(new BorderLayout(0, 20));
         card.setBackground(Color.WHITE);
         card.setBorder(BorderFactory.createCompoundBorder(
@@ -43,7 +43,7 @@ public class NumberSystemPanel extends JPanel {
                 new EmptyBorder(25, 25, 25, 25)
         ));
 
-        // 1. TOP SECTION (Input)
+
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
         inputPanel.setOpaque(false);
@@ -63,7 +63,7 @@ public class NumberSystemPanel extends JPanel {
         
         card.add(inputPanel, BorderLayout.NORTH);
 
-        // 2. CENTER SECTION (Two Column Grid)
+
         JPanel gridPanel = new JPanel(new GridLayout(4, 2, 25, 15));
         gridPanel.setOpaque(false);
 
@@ -82,9 +82,9 @@ public class NumberSystemPanel extends JPanel {
         gridPanel.add(createGridItem("Hexadecimal (Base 16)", hexLabel));
         gridPanel.add(createGridItem("Roman Numerals", romanLabel));
         gridPanel.add(createGridItem("ASCII Character", asciiLabel));
-        gridPanel.add(new JPanel() {{ setOpaque(false); }}); // Placeholder for 8th slot
+        gridPanel.add(new JPanel() {{ setOpaque(false); }});
 
-        // 3. BOTTOM SECTION (Words + Invisible Box)
+
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
         bottomPanel.setOpaque(false);
@@ -101,7 +101,7 @@ public class NumberSystemPanel extends JPanel {
         bottomPanel.add(Box.createVerticalStrut(8));
         bottomPanel.add(wordsArea);
         
-        // The requested invisible box at the very bottom
+
         bottomPanel.add(Box.createVerticalStrut(50));
 
         JPanel centerContent = new JPanel(new BorderLayout(0, 20));
@@ -112,7 +112,7 @@ public class NumberSystemPanel extends JPanel {
         card.add(centerContent, BorderLayout.CENTER);
         add(card, BorderLayout.CENTER);
 
-        // ================= LIVE UPDATE =================
+
         inputField.getDocument().addDocumentListener(new DocumentListener() {
             public void insertUpdate(DocumentEvent e) { updateConversion(); }
             public void removeUpdate(DocumentEvent e) { updateConversion(); }

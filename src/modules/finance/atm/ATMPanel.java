@@ -40,7 +40,7 @@ public class ATMPanel extends JPanel {
                 new EmptyBorder(40, 50, 40, 50)
         ));
 
-        // --- Logo / Header ---
+
         JLabel logo = new JLabel("SMART ATM");
         logo.setFont(new Font("SansSerif", Font.BOLD, 42));
         logo.setForeground(Color.BLACK);
@@ -51,7 +51,7 @@ public class ATMPanel extends JPanel {
         subHeader.setForeground(Color.GRAY);
         subHeader.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // --- Balance Display ---
+
         JPanel balanceBox = new JPanel();
         balanceBox.setBackground(Color.BLACK);
         balanceBox.setMaximumSize(new Dimension(400, 80));
@@ -62,7 +62,7 @@ public class ATMPanel extends JPanel {
         balanceLabel.setFont(new Font("Monospaced", Font.BOLD, 24));
         balanceBox.add(balanceLabel);
 
-        // --- Input Fields ---
+
         JPanel inputs = new JPanel(new GridLayout(2, 1, 0, 20));
         inputs.setOpaque(false);
         inputs.setMaximumSize(new Dimension(400, 150));
@@ -78,7 +78,7 @@ public class ATMPanel extends JPanel {
         inputs.add(pinSection);
         inputs.add(amountSection);
 
-        // --- Quick Options ---
+
         JPanel quickOptions = new JPanel(new GridLayout(1, 3, 10, 0));
         quickOptions.setOpaque(false);
         quickOptions.setMaximumSize(new Dimension(400, 50));
@@ -87,7 +87,7 @@ public class ATMPanel extends JPanel {
         quickOptions.add(createQuickBtn("₹ 1000", "1000"));
         quickOptions.add(createQuickBtn("₹ 5000", "5000"));
 
-        // --- Action Button ---
+
         JButton withdrawBtn = new JButton("WITHDRAW CASH");
         withdrawBtn.setBackground(Color.BLACK);
         withdrawBtn.setForeground(Color.WHITE);
@@ -97,7 +97,7 @@ public class ATMPanel extends JPanel {
         withdrawBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         withdrawBtn.addActionListener(e -> handleWithdraw());
 
-        // Assembly
+
         card.add(logo);
         card.add(Box.createVerticalStrut(5));
         card.add(subHeader);
@@ -109,7 +109,7 @@ public class ATMPanel extends JPanel {
         card.add(quickOptions);
         card.add(Box.createVerticalStrut(40));
         card.add(withdrawBtn);
-        card.add(Box.createVerticalStrut(65)); // Invisible box size of an input section
+        card.add(Box.createVerticalStrut(65));
 
         add(card, gbc);
     }

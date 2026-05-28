@@ -3,7 +3,7 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 
-import gui.DashboardFrame; // Add this import
+import gui.DashboardFrame;
 
 public class OwnerControlPanel extends JPanel {
 
@@ -14,7 +14,7 @@ public class OwnerControlPanel extends JPanel {
         setLayout(new BorderLayout());
         setBackground(new Color(235,235,235));
 
-        // LEFT MENU
+
         JPanel menuPanel = new JPanel();
         menuPanel.setPreferredSize(new Dimension(240,0));
         menuPanel.setBackground(Color.BLACK);
@@ -39,7 +39,7 @@ public class OwnerControlPanel extends JPanel {
         menuPanel.add(moduleBtn);
         menuPanel.add(logsBtn);
 
-        // RIGHT CONTENT
+
         contentPanel = new JPanel(new BorderLayout());
         contentPanel.setBackground(new Color(240,240,240));
 
@@ -48,7 +48,7 @@ public class OwnerControlPanel extends JPanel {
         add(menuPanel, BorderLayout.WEST);
         add(contentPanel, BorderLayout.CENTER);
 
-        // BUTTON ACTIONS
+
 
         dashboardBtn.addActionListener(e ->
                 showDashboardSettings());
@@ -66,7 +66,7 @@ public class OwnerControlPanel extends JPanel {
                 showLogsPanel());
     }
 
-    // ================= DASHBOARD SETTINGS =================
+
 
     private void showDashboardSettings() {
 
@@ -85,7 +85,7 @@ public class OwnerControlPanel extends JPanel {
         switchContent(panel);
     }
 
-    // ================= USER MANAGEMENT =================
+
 
     private void showUserManagement() {
 
@@ -104,7 +104,7 @@ public class OwnerControlPanel extends JPanel {
         switchContent(panel);
     }
 
-    // ================= HARDWARE =================
+
 
     private void showHardwareControls() {
 
@@ -134,7 +134,7 @@ public class OwnerControlPanel extends JPanel {
         switchContent(panel);
     }
 
-    // ================= MODULE CONTROLS =================
+
 
     private void showModuleControls() {
 
@@ -167,7 +167,7 @@ public class OwnerControlPanel extends JPanel {
         switchContent(panel);
     }
 
-    // ================= LOGS =================
+
 
     private void showLogsPanel() {
 
@@ -195,7 +195,7 @@ Arduino Not Connected...
         switchContent(panel);
     }
 
-    // ================= HELPERS =================
+
 
     private JPanel createContentPanel(String title) {
 

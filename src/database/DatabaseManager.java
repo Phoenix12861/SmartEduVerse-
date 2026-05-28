@@ -28,13 +28,13 @@ public class DatabaseManager {
                 Connection conn = connect();
                 Statement stmt = conn.createStatement()
         ) {
-            // ... (Tables creation remains the same)
+
             
-            // USERS
+
             stmt.execute("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE NOT NULL, password TEXT NOT NULL, role TEXT NOT NULL, is_library_banned INTEGER DEFAULT 0)");
             try { stmt.execute("ALTER TABLE users ADD COLUMN is_library_banned INTEGER DEFAULT 0"); } catch (Exception e) {}
             
-            // SETTINGS
+
             stmt.execute("CREATE TABLE IF NOT EXISTS settings (id INTEGER PRIMARY KEY AUTOINCREMENT, icon_size INTEGER DEFAULT 30, card_size INTEGER DEFAULT 220, com_port TEXT DEFAULT 'COM3', theme TEXT DEFAULT 'DEFAULT', sidebar_style TEXT DEFAULT 'DARK', home_style TEXT DEFAULT 'LIGHT', grid_gap INTEGER DEFAULT 18, ai_provider TEXT DEFAULT 'OLLAMA', groq_key TEXT, last_train_reset TEXT)");
             
             try { stmt.execute("ALTER TABLE settings ADD COLUMN theme TEXT DEFAULT 'DEFAULT'"); } catch (Exception e) {}
@@ -49,7 +49,7 @@ public class DatabaseManager {
             try { stmt.execute("ALTER TABLE modules ADD COLUMN modified_by TEXT"); } catch (Exception e) {}
             stmt.execute("CREATE TABLE IF NOT EXISTS admin_logs (id INTEGER PRIMARY KEY AUTOINCREMENT, actor TEXT, action TEXT, details TEXT, timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
 
-            // LIBRARY
+
             stmt.execute("CREATE TABLE IF NOT EXISTS books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, author TEXT, category TEXT, quantity INTEGER DEFAULT 1, available_count INTEGER DEFAULT 1, price REAL DEFAULT 500)");
             try { stmt.execute("ALTER TABLE books ADD COLUMN price REAL DEFAULT 500"); } catch (Exception e) {}
             stmt.execute("CREATE TABLE IF NOT EXISTS library_records (id INTEGER PRIMARY KEY AUTOINCREMENT, book_id INTEGER, username TEXT, borrow_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, due_date TIMESTAMP, return_date TIMESTAMP, status TEXT DEFAULT 'BORROWED', fine_amount REAL DEFAULT 0, FOREIGN KEY(book_id) REFERENCES books(id), FOREIGN KEY(username) REFERENCES users(username))");
@@ -58,72 +58,72 @@ public class DatabaseManager {
             
             stmt.execute("CREATE TABLE IF NOT EXISTS library_bills (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, description TEXT, amount REAL, status TEXT DEFAULT 'UNPAID', created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(username) REFERENCES users(username))");
 
-            // ... (rest of tables)
+
             try (ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM settings")) {
                 if (rs.next() && rs.getInt(1) == 0) {
                     stmt.execute("INSERT INTO settings (icon_size) VALUES (30)");
                 }
             }
-            // BANK ACCOUNTS
+
             stmt.execute("CREATE TABLE IF NOT EXISTS bank_accounts (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE NOT NULL, bank_password TEXT NOT NULL, balance REAL DEFAULT 0, status TEXT DEFAULT 'PENDING', approved_by TEXT, terminated_by TEXT, terminated_at TIMESTAMP, rfid_uid TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(username) REFERENCES users(username))");
 
-            // TRANSACTIONS
+
             stmt.execute("CREATE TABLE IF NOT EXISTS transactions (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL, type TEXT NOT NULL, amount REAL NOT NULL, description TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(username) REFERENCES users(username))");
 
-            // DEPOSIT REQUESTS
+
             stmt.execute("CREATE TABLE IF NOT EXISTS deposit_requests (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL, amount REAL NOT NULL, status TEXT DEFAULT 'PENDING', requested_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, approved_by TEXT, FOREIGN KEY(username) REFERENCES users(username))");
 
-            // RFID LINKS
+
             stmt.execute("CREATE TABLE IF NOT EXISTS rfid_cards (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE NOT NULL, uid TEXT UNIQUE NOT NULL, linked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(username) REFERENCES users(username))");
 
-            // ATM LOGS
+
             stmt.execute("CREATE TABLE IF NOT EXISTS atm_logs (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL, action TEXT NOT NULL, amount REAL, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(username) REFERENCES users(username))");
 
-            // BANK LOGS
+
             stmt.execute("CREATE TABLE IF NOT EXISTS bank_logs (id INTEGER PRIMARY KEY AUTOINCREMENT, actor TEXT NOT NULL, action TEXT NOT NULL, target TEXT, details TEXT, timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
 
-            // PASSWORD VAULT
+
             stmt.execute("CREATE TABLE IF NOT EXISTS vault (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL, app_name TEXT NOT NULL, app_password TEXT NOT NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(username) REFERENCES users(username))");
 
-            // VAULT LOGS
+
             stmt.execute("CREATE TABLE IF NOT EXISTS vault_logs (id INTEGER PRIMARY KEY AUTOINCREMENT, actor TEXT NOT NULL, action TEXT NOT NULL, target TEXT, details TEXT, timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
 
-            // DIARY MODULE
+
             stmt.execute("CREATE TABLE IF NOT EXISTS diary (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL, title TEXT NOT NULL, content TEXT NOT NULL, is_locked INTEGER DEFAULT 0, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(username) REFERENCES users(username))");
             stmt.execute("CREATE TABLE IF NOT EXISTS diary_passwords (username TEXT PRIMARY KEY, password TEXT NOT NULL, FOREIGN KEY(username) REFERENCES users(username))");
 
-            // RESTAURANT MODULE
+
             stmt.execute("CREATE TABLE IF NOT EXISTS restaurants (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE NOT NULL)");
             stmt.execute("CREATE TABLE IF NOT EXISTS restaurant_tables (id INTEGER PRIMARY KEY AUTOINCREMENT, restaurant_id INTEGER, table_number INTEGER, is_occupied INTEGER DEFAULT 0, FOREIGN KEY(restaurant_id) REFERENCES restaurants(id))");
             stmt.execute("CREATE TABLE IF NOT EXISTS restaurant_reservations (id INTEGER PRIMARY KEY AUTOINCREMENT, table_id INTEGER, username TEXT, date TEXT, time TEXT, status TEXT DEFAULT 'ACTIVE', created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(table_id) REFERENCES restaurant_tables(id), FOREIGN KEY(username) REFERENCES users(username))");
             stmt.execute("CREATE TABLE IF NOT EXISTS restaurant_bills (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, restaurant_id INTEGER, table_number INTEGER, total_amount REAL DEFAULT 0, status TEXT DEFAULT 'PENDING', FOREIGN KEY(username) REFERENCES users(username), FOREIGN KEY(restaurant_id) REFERENCES restaurants(id))");
             stmt.execute("CREATE TABLE IF NOT EXISTS restaurant_bill_items (id INTEGER PRIMARY KEY AUTOINCREMENT, bill_id INTEGER, item_name TEXT, price REAL, FOREIGN KEY(bill_id) REFERENCES restaurant_bills(id))");
 
-            // HOSPITAL MODULE
+
             stmt.execute("CREATE TABLE IF NOT EXISTS hospitals (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE NOT NULL)");
             stmt.execute("CREATE TABLE IF NOT EXISTS hospital_rooms (id INTEGER PRIMARY KEY AUTOINCREMENT, hospital_id INTEGER, room_number INTEGER, type TEXT, is_occupied INTEGER DEFAULT 0, FOREIGN KEY(hospital_id) REFERENCES hospitals(id))");
             stmt.execute("CREATE TABLE IF NOT EXISTS hospital_bookings (id INTEGER PRIMARY KEY AUTOINCREMENT, room_id INTEGER, username TEXT, start_date TEXT, days INTEGER, status TEXT DEFAULT 'ACTIVE', FOREIGN KEY(room_id) REFERENCES hospital_rooms(id), FOREIGN KEY(username) REFERENCES users(username))");
             stmt.execute("CREATE TABLE IF NOT EXISTS hospital_bills (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, hospital_id INTEGER, room_number INTEGER, room_charge REAL DEFAULT 0, medical_charge REAL DEFAULT 0, total_amount REAL DEFAULT 0, status TEXT DEFAULT 'PENDING', FOREIGN KEY(username) REFERENCES users(username), FOREIGN KEY(hospital_id) REFERENCES hospitals(id))");
             stmt.execute("CREATE TABLE IF NOT EXISTS hospital_bill_items (id INTEGER PRIMARY KEY AUTOINCREMENT, bill_id INTEGER, item_name TEXT, price REAL, FOREIGN KEY(bill_id) REFERENCES hospital_bills(id))");
 
-            // PARKING MODULE
+
             stmt.execute("CREATE TABLE IF NOT EXISTS parking_lots (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE NOT NULL, type TEXT, reference_id INTEGER)");
             stmt.execute("CREATE TABLE IF NOT EXISTS parking_spots (id INTEGER PRIMARY KEY AUTOINCREMENT, lot_id INTEGER, spot_number INTEGER, is_occupied INTEGER DEFAULT 0, is_available INTEGER DEFAULT 1, FOREIGN KEY(lot_id) REFERENCES parking_lots(id))");
             stmt.execute("CREATE TABLE IF NOT EXISTS parking_occupancy (id INTEGER PRIMARY KEY AUTOINCREMENT, spot_id INTEGER, username TEXT, occupied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, vacated_at TIMESTAMP, FOREIGN KEY(spot_id) REFERENCES parking_spots(id), FOREIGN KEY(username) REFERENCES users(username))");
             stmt.execute("CREATE TABLE IF NOT EXISTS parking_logs (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, action TEXT, details TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
 
-            // TRAIN MODULE
+
             stmt.execute("CREATE TABLE IF NOT EXISTS stations (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE NOT NULL)");
             stmt.execute("CREATE TABLE IF NOT EXISTS trains (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, from_station_id INTEGER, to_station_id INTEGER, departure_time TEXT, max_capacity INTEGER, current_occupancy INTEGER DEFAULT 0, price REAL, status TEXT DEFAULT 'SCHEDULED', FOREIGN KEY(from_station_id) REFERENCES stations(id), FOREIGN KEY(to_station_id) REFERENCES stations(id))");
             stmt.execute("CREATE TABLE IF NOT EXISTS train_tickets (id INTEGER PRIMARY KEY AUTOINCREMENT, train_id INTEGER, username TEXT, seat_number INTEGER, status TEXT DEFAULT 'PAID', FOREIGN KEY(train_id) REFERENCES trains(id), FOREIGN KEY(username) REFERENCES users(username))");
 
-            // ELECTRICITY MODULE
+
             stmt.execute("CREATE TABLE IF NOT EXISTS electricity_bills (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, units REAL, amount REAL, fine REAL DEFAULT 0, total_amount REAL, due_date TEXT, status TEXT DEFAULT 'PENDING', created_by TEXT, FOREIGN KEY(username) REFERENCES users(username))");
 
-            // COURIER MODULE
+
             stmt.execute("CREATE TABLE IF NOT EXISTS couriers (id INTEGER PRIMARY KEY AUTOINCREMENT, sender_username TEXT, receiver_username TEXT, from_address TEXT, to_address TEXT, current_location TEXT, distance_km REAL, amount REAL, status TEXT DEFAULT 'PENDING', payment_status TEXT DEFAULT 'PENDING', route TEXT, estimated_time INTEGER DEFAULT 0, FOREIGN KEY(sender_username) REFERENCES users(username), FOREIGN KEY(receiver_username) REFERENCES users(username))");
 
-            // SCHOOL MANAGEMENT MODULE
+
             stmt.execute("CREATE TABLE IF NOT EXISTS schools (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE NOT NULL)");
             stmt.execute("CREATE TABLE IF NOT EXISTS school_staff (id INTEGER PRIMARY KEY AUTOINCREMENT, school_id INTEGER, username TEXT UNIQUE, role TEXT, salary REAL DEFAULT 0, last_salary_paid TEXT, FOREIGN KEY(school_id) REFERENCES schools(id), FOREIGN KEY(username) REFERENCES users(username))");
             stmt.execute("CREATE TABLE IF NOT EXISTS school_students (id INTEGER PRIMARY KEY AUTOINCREMENT, school_id INTEGER, username TEXT UNIQUE, class_number INTEGER, section TEXT, status TEXT DEFAULT 'ACTIVE', total_fees REAL DEFAULT 0, fees_paid REAL DEFAULT 0, repeat_class INTEGER DEFAULT 0, FOREIGN KEY(school_id) REFERENCES schools(id), FOREIGN KEY(username) REFERENCES users(username))");
@@ -135,11 +135,11 @@ public class DatabaseManager {
             stmt.execute("CREATE TABLE IF NOT EXISTS school_results (id INTEGER PRIMARY KEY AUTOINCREMENT, student_username TEXT, subject TEXT, marks REAL, total_marks REAL, FOREIGN KEY(student_username) REFERENCES users(username))");
             stmt.execute("CREATE TABLE IF NOT EXISTS school_transfer_requests (id INTEGER PRIMARY KEY AUTOINCREMENT, student_username TEXT, from_school_id INTEGER, to_school_id INTEGER, status TEXT DEFAULT 'PENDING', FOREIGN KEY(student_username) REFERENCES users(username))");
             
-            // NEW TABLES FOR NOTIFICATIONS AND APPLICATIONS
+
             stmt.execute("CREATE TABLE IF NOT EXISTS notifications (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, message TEXT, type TEXT, is_read INTEGER DEFAULT 0, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(username) REFERENCES users(username))");
             stmt.execute("CREATE TABLE IF NOT EXISTS school_applications (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, school_id INTEGER, status TEXT DEFAULT 'PENDING', created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(username) REFERENCES users(username), FOREIGN KEY(school_id) REFERENCES schools(id))");
 
-            // Migration: Ensure status columns exist for older DBs
+
             try { stmt.execute("ALTER TABLE restaurant_reservations ADD COLUMN status TEXT DEFAULT 'ACTIVE'"); } catch (Exception e) {}
             try { stmt.execute("ALTER TABLE restaurant_bills ADD COLUMN table_number INTEGER"); } catch (Exception e) {}
             try { stmt.execute("ALTER TABLE hospital_bills ADD COLUMN room_number INTEGER"); } catch (Exception e) {}
@@ -208,7 +208,7 @@ public class DatabaseManager {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) return rs.getInt(1) == 1;
         } catch (SQLException e) { e.printStackTrace(); }
-        return true; // Default to enabled
+        return true;
     }
 
     public static void setModuleEnabled(String name, boolean enabled, String actor) {
@@ -235,7 +235,7 @@ public class DatabaseManager {
     }
 
     public static void purgeLogs(String actor) {
-        if (!actor.equalsIgnoreCase("owner")) return; // Only default owner
+        if (!actor.equalsIgnoreCase("owner")) return;
         try (Connection conn = connect();
              Statement stmt = conn.createStatement()) {
             stmt.execute("DELETE FROM admin_logs");
@@ -248,7 +248,7 @@ public class DatabaseManager {
         try {
             conn.setAutoCommit(false);
 
-            // 1. Restaurants
+
             try (Statement s = conn.createStatement(); ResultSet rs = s.executeQuery("SELECT COUNT(*) FROM restaurants")) {
                 if (rs.next() && rs.getInt(1) == 0) {
                     System.out.println("Populating Restaurants...");
@@ -290,10 +290,10 @@ public class DatabaseManager {
                 }
             }
 
-            // 2. Hospitals
+
             try (Statement s = conn.createStatement(); ResultSet rs = s.executeQuery("SELECT COUNT(*) FROM hospital_rooms")) {
                 boolean repopulate = false;
-                if (!rs.next() || rs.getInt(1) > 500) { // If it has the old 900 rooms (300*3)
+                if (!rs.next() || rs.getInt(1) > 500) {
                     repopulate = true;
                 }
                 
@@ -345,7 +345,7 @@ public class DatabaseManager {
                 }
             }
 
-            // 3. Stations
+
             try (Statement s = conn.createStatement(); ResultSet rs = s.executeQuery("SELECT COUNT(*) FROM trains")) {
                 boolean repopulate = false;
                 if (!rs.next() || rs.getInt(1) != 900) {
@@ -391,7 +391,7 @@ public class DatabaseManager {
                 }
             }
 
-            // 4. System Accounts
+
             try (Statement s = conn.createStatement(); ResultSet rs = s.executeQuery("SELECT COUNT(*) FROM users WHERE username LIKE 'SYSTEM_%'")) {
                 if (rs.next() && rs.getInt(1) < 6) {
                     System.out.println("Creating System Accounts...");
@@ -405,7 +405,7 @@ public class DatabaseManager {
                         try (PreparedStatement ps = conn.prepareStatement("INSERT OR IGNORE INTO bank_accounts(username, bank_password, balance, status, approved_by) VALUES(?, ?, ?, ?, ?)")) {
                             ps.setString(1, account);
                             ps.setString(2, "1234");
-                            ps.setDouble(3, 1000000.0); // Give systems some money to allow refunds
+                            ps.setDouble(3, 1000000.0);
                             ps.setString(4, "APPROVED");
                             ps.setString(5, "SYSTEM");
                             ps.executeUpdate();
@@ -414,7 +414,7 @@ public class DatabaseManager {
                 }
             }
 
-            // 5. Schools
+
             try (Statement s = conn.createStatement(); ResultSet rs = s.executeQuery("SELECT COUNT(*) FROM schools")) {
                 if (rs.next() && rs.getInt(1) == 0) {
                     System.out.println("Populating Schools...");
@@ -428,11 +428,11 @@ public class DatabaseManager {
                 }
             }
 
-            // 6. Library Books
+
             try (Statement s = conn.createStatement(); ResultSet rs = s.executeQuery("SELECT COUNT(*) FROM books")) {
-                if (rs.next() && rs.getInt(1) < 10) { // If it's the old 8 books or empty
+                if (rs.next() && rs.getInt(1) < 10) {
                     System.out.println("Populating Library with 100 books...");
-                    s.execute("DELETE FROM books"); // Clear old
+                    s.execute("DELETE FROM books");
                     String[] categories = {"Computer Science", "Fiction", "Science", "Literature", "AI", "History", "Biography", "Art", "Business", "Health"};
                     for (int i = 0; i < categories.length; i++) {
                         String cat = categories[i];
@@ -443,7 +443,7 @@ public class DatabaseManager {
                                 ps.setString(3, cat);
                                 ps.setInt(4, 5);
                                 ps.setInt(5, 5);
-                                ps.setDouble(6, 400.0 + (j * 20)); // Varying prices
+                                ps.setDouble(6, 400.0 + (j * 20));
                                 ps.executeUpdate();
                             }
                         }

@@ -22,7 +22,7 @@ public class GuessNumberPanel extends JPanel {
         setBackground(new Color(245, 245, 247));
         setBorder(new EmptyBorder(30, 40, 30, 40));
 
-        // ================= HEADER =================
+
         JPanel header = new JPanel(new BorderLayout());
         header.setOpaque(false);
 
@@ -39,7 +39,7 @@ public class GuessNumberPanel extends JPanel {
 
         add(header, BorderLayout.NORTH);
 
-        // ================= MAIN CONTENT =================
+
         JPanel mainCard = new JPanel();
         mainCard.setLayout(new BoxLayout(mainCard, BoxLayout.Y_AXIS));
         mainCard.setBackground(Color.WHITE);
@@ -95,7 +95,7 @@ public class GuessNumberPanel extends JPanel {
 
         add(mainCard, BorderLayout.CENTER);
 
-        // ================= FOOTER =================
+
         JPanel footer = new JPanel(new FlowLayout(FlowLayout.CENTER));
         footer.setOpaque(false);
         JButton resetBtn = new JButton("Reset Game");
@@ -119,12 +119,12 @@ public class GuessNumberPanel extends JPanel {
             inputField.setText("");
             
             if (won) {
-                feedbackLabel.setForeground(new Color(40, 180, 99)); // Success Green
+                feedbackLabel.setForeground(new Color(40, 180, 99));
                 inputField.setEditable(false);
                 submitBtn.setEnabled(false);
                 showWinEffect();
             } else {
-                feedbackLabel.setForeground(new Color(231, 76, 60)); // Error Red
+                feedbackLabel.setForeground(new Color(231, 76, 60));
             }
         } catch (NumberFormatException e) {
             feedbackLabel.setText("Please enter a valid number!");
@@ -154,7 +154,7 @@ public class GuessNumberPanel extends JPanel {
         timer.setRepeats(true);
         timer.start();
         
-        // Stop blinking after 3 seconds
+
         new Timer(3000, e -> {
             timer.stop();
             feedbackLabel.setVisible(true);

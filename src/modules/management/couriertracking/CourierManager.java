@@ -54,7 +54,7 @@ public class CourierManager {
     public static boolean createCourier(String sender, String receiver, String from, String to, double dist) {
         double amount = dist * 10.0;
         String initialRoute = from + " -> " + to;
-        int estimatedTime = (int) (dist / 50.0 * 60.0); // 50km/h in minutes
+        int estimatedTime = (int) (dist / 50.0 * 60.0);
         try (Connection conn = DatabaseManager.connect();
              PreparedStatement ps = conn.prepareStatement(
                      "INSERT INTO couriers(sender_username, receiver_username, from_address, to_address, current_location, distance_km, amount, route, estimated_time) " +
@@ -63,7 +63,7 @@ public class CourierManager {
             ps.setString(2, receiver);
             ps.setString(3, from);
             ps.setString(4, to);
-            ps.setString(5, from); // Initial location
+            ps.setString(5, from);
             ps.setDouble(6, dist);
             ps.setDouble(7, amount);
             ps.setString(8, initialRoute);
@@ -196,7 +196,7 @@ public class CourierManager {
         } catch (SQLException e) { e.printStackTrace(); }
 
         if (sender != null && amount > 0) {
-            // Transfer back from SYSTEM_COURIER to user with REFUND type
+
             modules.finance.banking.BankAccountManager.refundMoney("SYSTEM_COURIER", sender, amount);
         }
 

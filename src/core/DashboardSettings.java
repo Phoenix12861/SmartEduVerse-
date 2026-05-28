@@ -2,7 +2,7 @@ package core;
 
 public class DashboardSettings {
 
-    // DEFAULT VALUES
+
 
     public static int ICON_SIZE = 95;
 

@@ -37,7 +37,7 @@ public class ModulePage extends JPanel {
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
 
-        // ================= TOP BAR =================
+
 
         JPanel topBar = new JPanel(new BorderLayout());
         topBar.setBackground(Color.WHITE);
@@ -53,11 +53,11 @@ public class ModulePage extends JPanel {
             Component module = centerPanel.getComponent(0);
             boolean handled = false;
             try {
-                // Use reflection to check for goBack() method in the module panel
+
                 java.lang.reflect.Method goBack = module.getClass().getMethod("goBack");
                 handled = (boolean) goBack.invoke(module);
             } catch (Exception ex) {
-                // Method not found or failed, ignore
+
             }
 
             if (!handled) {
@@ -74,7 +74,7 @@ public class ModulePage extends JPanel {
 
         add(topBar, BorderLayout.NORTH);
 
-        // ================= MODULE LOADER =================
+
 
         centerPanel = new JPanel(new BorderLayout());
         centerPanel.setBackground(Color.WHITE);

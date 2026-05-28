@@ -85,7 +85,7 @@ public class AttendancePanel extends JPanel {
         daily.add(filters, BorderLayout.NORTH);
         daily.add(new JScrollPane(list), BorderLayout.CENTER);
         
-        // CALENDAR PANEL
+
         JPanel calPanel = new JPanel(new BorderLayout()); calPanel.setBackground(Color.WHITE);
         JPanel grid = new JPanel(new GridLayout(0, 7)); grid.setBackground(Color.WHITE);
         

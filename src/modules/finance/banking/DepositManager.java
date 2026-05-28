@@ -14,14 +14,14 @@ public class DepositManager {
     public static boolean requestDeposit(String username, double amount) {
         if (amount <= 0 || amount > BankAccountManager.MAX_DEPOSIT) return false;
 
-        // Check if account is frozen
+
         String accountStatus = BankAccountManager.getStatus(username);
         if (accountStatus.equals("FROZEN") || accountStatus.equals("FROZEN_APPEAL")) return false;
 
         String status = "PENDING";
         String approvedBy = null;
 
-        // Owner auto-approves
+
         if (SessionManager.getCurrentRole() == UserRole.OWNER) {
             status = "APPROVED";
             approvedBy = "SYSTEM";
@@ -94,21 +94,21 @@ public class DepositManager {
                 return false;
             }
 
-            // Check if requester is frozen
+
             String requesterStatus = BankAccountManager.getStatus(requester);
             if (requesterStatus.equals("FROZEN") || requesterStatus.equals("FROZEN_APPEAL")) {
                 conn.rollback();
                 return false;
             }
 
-            // Authorization Check
+
             String adminRole = getRole(adminUser);
             if (!adminRole.equalsIgnoreCase("ADMIN") && !adminRole.equalsIgnoreCase("OWNER")) {
                 conn.rollback();
                 return false;
             }
 
-            // Self-approval check for Admins
+
             String requesterRole = getRole(requester);
             if (requesterRole.equalsIgnoreCase("ADMIN") && adminUser.equalsIgnoreCase(requester) && !adminRole.equalsIgnoreCase("OWNER")) {
                 conn.rollback();
@@ -141,7 +141,7 @@ public class DepositManager {
         try (Connection conn = DatabaseManager.connect()) {
             conn.setAutoCommit(false);
 
-            // Authorization Check
+
             String adminRole = getRole(adminUser);
             if (!adminRole.equalsIgnoreCase("ADMIN") && !adminRole.equalsIgnoreCase("OWNER")) {
                 conn.rollback();
@@ -166,9 +166,9 @@ public class DepositManager {
         }
     }
 
-    // =====================================================
-    // ================= UPDATE BALANCE TX =================
-    // =====================================================
+
+
+
 
     public static void updateBalance(
             Connection conn,
@@ -192,9 +192,9 @@ public class DepositManager {
         ps.executeUpdate();
     }
 
-    // =====================================================
-    // ================= GET USER ROLE =====================
-    // =====================================================
+
+
+
 
     public static String getRole(
             String username

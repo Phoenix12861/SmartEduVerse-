@@ -115,12 +115,12 @@ public class LibraryManager {
 
         if (amount == -1) return false;
 
-        // Money transfer happens on its own connection
+
         if (!modules.finance.banking.BankAccountManager.transferMoney(username, "SYSTEM_SCHOOL", amount, bankPassword)) {
             return false;
         }
 
-        // Update library record on a fresh connection
+
         try (Connection conn = DatabaseManager.connect();
              PreparedStatement psUpd = conn.prepareStatement("UPDATE library_bills SET status = 'PAID' WHERE id = ?")) {
             psUpd.setInt(1, billId);
@@ -135,12 +135,12 @@ public class LibraryManager {
         try (Connection conn = DatabaseManager.connect()) {
             conn.setAutoCommit(false);
             try {
-                // Check availability
+
                 PreparedStatement psCheck = conn.prepareStatement("SELECT available_count FROM books WHERE id = ? AND available_count > 0");
                 psCheck.setInt(1, bookId);
                 if (!psCheck.executeQuery().next()) return false;
 
-                // Create record with 7-day due date
+
                 java.util.Calendar cal = java.util.Calendar.getInstance();
                 cal.add(java.util.Calendar.DAY_OF_MONTH, 7);
                 Timestamp dueDate = new Timestamp(cal.getTimeInMillis());
@@ -151,7 +151,7 @@ public class LibraryManager {
                 psRec.setTimestamp(3, dueDate);
                 psRec.executeUpdate();
 
-                // Update count
+
                 PreparedStatement psUpd = conn.prepareStatement("UPDATE books SET available_count = available_count - 1 WHERE id = ?");
                 psUpd.setInt(1, bookId);
                 psUpd.executeUpdate();
@@ -165,22 +165,22 @@ public class LibraryManager {
 
     public static void checkOverdueAndFine() {
         try (Connection conn = DatabaseManager.connect()) {
-            // Calculate fine: 2 rupees per day overdue
-            // Logic: fine = (current_date - due_date) in days * 2
+
+
             String sql = "UPDATE library_records SET fine_amount = (strftime('%s','now') - strftime('%s',due_date)) / 86400 * 2 " +
                          "WHERE status = 'BORROWED' AND strftime('%s','now') > strftime('%s',due_date)";
             try (Statement stmt = conn.createStatement()) {
                 stmt.executeUpdate(sql);
             }
             
-            // Ban users who have overdue books and haven't paid fines
+
             String banSql = "UPDATE users SET is_library_banned = 1 WHERE username IN (SELECT username FROM library_records WHERE status = 'BORROWED' AND strftime('%s','now') > strftime('%s',due_date))";
             try (Statement stmt = conn.createStatement()) {
                 stmt.executeUpdate(banSql);
             }
             
-            // Notify admins about overdue books (one notification per overdue book if not already notified? for simplicity, just once)
-            // But we'll just send a general alert to notifications for each record
+
+
             ResultSet rs = conn.createStatement().executeQuery("SELECT username, id FROM library_records WHERE status = 'BORROWED' AND strftime('%s','now') > strftime('%s',due_date)");
             while (rs.next()) {
                 String user = rs.getString("username");
@@ -214,7 +214,7 @@ public class LibraryManager {
     }
 
     public static boolean payFineAndReturn(int recordId, String username, String bankPassword) {
-        // Handle money transfer outside the library transaction to avoid SQLite lock contention
+
         try (Connection conn = DatabaseManager.connect()) {
             PreparedStatement psGet = conn.prepareStatement("SELECT fine_amount, book_id FROM library_records WHERE id = ? AND status = 'BORROWED'");
             psGet.setInt(1, recordId);
@@ -232,18 +232,18 @@ public class LibraryManager {
 
             conn.setAutoCommit(false);
             try {
-                // Update record
+
                 PreparedStatement psRec = conn.prepareStatement("UPDATE library_records SET return_date = CURRENT_TIMESTAMP, status = 'RETURNED', fine_amount = ? WHERE id = ?");
                 psRec.setDouble(1, fine);
                 psRec.setInt(2, recordId);
                 psRec.executeUpdate();
 
-                // Update book count
+
                 PreparedStatement psUpd = conn.prepareStatement("UPDATE books SET available_count = available_count + 1 WHERE id = ?");
                 psUpd.setInt(1, bookId);
                 psUpd.executeUpdate();
 
-                // Check if user has any other overdue books before unbanning
+
                 PreparedStatement psCheck = conn.prepareStatement("SELECT COUNT(*) FROM library_records WHERE username = ? AND status = 'BORROWED' AND strftime('%s','now') > strftime('%s',due_date)");
                 psCheck.setString(1, username);
                 ResultSet rsCheck = psCheck.executeQuery();
@@ -265,7 +265,7 @@ public class LibraryManager {
             ps.setString(2, author);
             ps.setString(3, category);
             ps.setInt(4, qty);
-            ps.setInt(5, qty); // Reset available count to match new quantity for simplicity
+            ps.setInt(5, qty);
             ps.setDouble(6, price);
             ps.setInt(7, bookId);
             return ps.executeUpdate() > 0;

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class TransactionManager {
 
-    // ================= ADD TRANSACTION =================
+
 
     public static void addTransaction(
             String username,
@@ -53,7 +53,7 @@ public class TransactionManager {
         }
     }
 
-    // ================= PURGE TRANSACTIONS =================
+
 
     public static boolean purgeUserTransactions(String username) {
         try (Connection conn = DatabaseManager.connect();
