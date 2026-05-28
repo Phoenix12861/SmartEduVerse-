@@ -13,7 +13,7 @@ The primary goal of SmartEduVerse is to provide a unified platform that eliminat
 ### Key Objectives:
 - **Efficiency:** Streamline administrative tasks through automation. By reducing manual data entry and automating routine processes like attendance and billing, we free up human resources for more creative and impactful tasks.
 - **Intelligence:** Leverage Local AI (Ollama) to provide personalized learning and planning. We believe AI should be a tool for empowerment, not just automation. Our integration with Ollama ensures that AI is accessible, private, and tailored to the individual.
-- **Security:** Implement multi-layered security, including role-based access and hardware-level authentication (NFC). In an increasingly digital world, security cannot be an afterthought. SmartEduVerse is built with security at its foundation.
+- **Security:** Implement multi-layered security, including role-based access and secure authentication. In an increasingly digital world, security cannot be an afterthought. SmartEduVerse is built with security at its foundation.
 - **Scalability:** Design a modular architecture that allows for easy expansion. As institutions grow, their needs change. SmartEduVerse's modular design ensures that it can grow with you, adding new features and capabilities as needed.
 - **User Experience:** Provide a modern, professional GUI that is both intuitive and powerful. A great tool is only useful if people enjoy using it. Our custom B/W theme is designed for clarity, focus, and a professional aesthetic.
 
@@ -30,8 +30,7 @@ This sub-module handles the heavy lifting of school administration. It includes 
 - **Exam Management:** Scheduling exams, generating hall tickets, and managing result entry.
 
 #### 3.1.2 Attendance System
-A sophisticated attendance tracking system that supports both manual entry and automated hardware integration (NFC). It provides detailed reports, allowing teachers to track student participation over time and identify patterns that may require intervention.
-- **NFC Integration:** Students can tap their IDs to mark attendance automatically.
+A sophisticated attendance tracking system that supports both manual entry and manual or automated entry. It provides detailed reports, allowing teachers to track student participation over time and identify patterns that may require intervention.
 - **Real-time Monitoring:** Teachers can see at a glance who is present and who is absent.
 - **Automated Alerts:** Parents can be notified via the notification system if a student is absent without leave.
 
@@ -184,7 +183,7 @@ SmartEduVerse follows a strict Model-View-Controller (MVC) pattern, adapted for 
 
 Security is baked into every layer of SmartEduVerse:
 - **Role-Based Access Control (RBAC):** Users are assigned roles (Owner, Admin, User), and each role has specific permissions. This ensures that a regular student cannot access financial records or modify exam marks.
-- **Hardware Authentication:** Support for NFC and  readers provides a layer of physical security for sensitive modules like the Bank or School Management.
+- **:** Secure access protocols ensure that sensitive modules like the Bank or School Management are protected.
 - **Encrypted Storage:** Sensitive data like passwords and financial records are encrypted before being saved to the database. We take data protection seriously.
 
 ## 7. Installation Guide
@@ -196,17 +195,17 @@ Security is baked into every layer of SmartEduVerse:
 
 ### 7.2 Linux Installation
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/SmartEduVerse.git
-   ```
+ ```bash
+ git clone https://github.com/yourusername/SmartEduVerse.git
+ ```
 2. Navigate to the project directory:
-   ```bash
-   cd SmartEduVerse
-   ```
+ ```bash
+ cd SmartEduVerse
+ ```
 3. Run the application:
-   ```bash
-   java -jar build/SmartEduVerse.jar
-   ```
+ ```bash
+ java -jar build/SmartEduVerse.jar
+ ```
 
 ### 7.3 Windows Installation
 1. Download the latest `SmartEduVerse.exe` from the Releases page.
@@ -298,7 +297,7 @@ Moving the 'Virtual Ledger' of the Finance Module to a private blockchain (like 
 Moving beyond Ollama to support remote LLMs (like GPT-4 or Claude) for even more sophisticated study planning and automated grading of student assignments.
 
 ### Phase 4: IoT Hardware Ecosystem
-Developing proprietary NFC hardware modules that can be plugged into any USB port to provide 'Plug-and-Play' security for institutions.
+Developing proprietary hardware modules that can be plugged into any USB port to provide 'Plug-and-Play' security for institutions.
 
 ## 14. Detailed Troubleshooting Guide
 
@@ -321,10 +320,10 @@ SmartEduVerse is built on the principle of 'Privacy by Design'.
 Imagine a Tuesday morning at 'Global International School'. 
 
 **7:00 AM - The Administrator Arrives:**
-The school administrator, Mr. Sharma, logs into the **School Management** module. He checks the **Staff Attendance** (synced from the  readers at the gate). He notices a teacher is on leave and uses the **Timetable Manager** to automatically reassign classes to available substitute teachers.
+The school administrator, Mr. Sharma, logs into the **School Management** module. He checks the **Staff Attendance** (synced from the readers at the gate). He notices a teacher is on leave and uses the **Timetable Manager** to automatically reassign classes to available substitute teachers.
 
 **9:00 AM - The Student Experience:**
-A student, Rahul, uses the **NFC Authenticator** at the classroom door to mark his attendance. He then opens the **Digital Diary** on the classroom kiosk to see the assignments for the day. During his free period, he uses the **AI Study Planner** to generate a revision schedule for his upcoming Math exam.
+A student, Rahul, uses the ** Authenticator** at the classroom door to mark his attendance. He then opens the **Digital Diary** on the classroom kiosk to see the assignments for the day. During his free period, he uses the **AI Study Planner** to generate a revision schedule for his upcoming Math exam.
 
 **12:00 PM - Managing the Canteen:**
 The school canteen uses the **Restaurant Billing** module. Students pay for their lunch using their pre-loaded school IDs. The system deducts the amount from their **Virtual Bank Account** managed by the **Finance Module**.
