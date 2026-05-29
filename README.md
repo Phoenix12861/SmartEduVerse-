@@ -30,24 +30,22 @@ This sub-module handles the heavy lifting of school administration. It includes 
 - **Exam Management:** Scheduling exams, generating hall tickets, and managing result entry.
 
 #### 3.1.2 Attendance System
-A sophisticated attendance tracking system that supports both manual entry and manual or automated entry. It provides detailed reports, allowing teachers to track student participation over time and identify patterns that may require intervention.
+A sophisticated attendance tracking system that supports  manual entry . It provides detailed reports, allowing teachers to track student participation over time and identify patterns that may require intervention.
 - **Real-time Monitoring:** Teachers can see at a glance who is present and who is absent.
-- **Automated Alerts:** Parents can be notified via the notification system if a student is absent without leave.
+- **Automated Alerts:** Students can be notified via the notification system if the student id marked absent .
 
 #### 3.1.3 Digital Diary
-The Diary sub-module allows students and teachers to maintain a daily record of homework, assignments, and personal notes. It features a rich-text editor and is integrated with the notification system to ensure no deadline is ever missed.
-- **Homework Tracking:** Teachers can post assignments, and students can track their completion.
+The Diary sub-module allows students  to maintain a daily record of homework, assignments, and personal notes. It features a rich-text editor and is integrated with the notification system .
 - **Personal Notes:** A secure space for students to jot down thoughts and ideas.
-- **Sync with Planner:** Assignments are automatically pulled into the AI Study Planner.
 
 #### 3.1.4 Result Analyzer
-One of the most powerful tools in the academic suite, the Result Analyzer takes raw exam data and converts it into actionable insights. It generates charts and graphs (using the custom ChartPanel) to visualize performance trends, helping educators identify subjects where students may be struggling.
-- **Performance Visualization:** Bar charts, line graphs, and pie charts of class performance.
+One of the most powerful tools in the academic suite, the Result Analyzer takes raw exam data and converts it into actionable insights.
+- **AI Helper:** Students can use Text to AI feature to get clarification on their doubts .
 - **Individual Growth Tracking:** See how a student's marks have evolved over the academic year.
 - **Predictive Analytics:** Identify students at risk of falling behind before it's too late.
 
 #### 3.1.5 AI Study Planner
-Powered by Ollama, the AI Study Planner creates personalized schedules based on a student's strengths, weaknesses, and upcoming deadlines. It takes into account the student's learning style and provides a day-by-day roadmap to academic success.
+Powered by Ollama or Groq, the AI Study Planner creates personalized schedules based on a student's strengths, weaknesses, and upcoming deadlines. It takes into account the student's learning style and provides a day-by-day roadmap to academic success.
 - **Personalized Schedules:** No more one-size-fits-all study plans.
 - **Dynamic Adjustments:** If a student misses a day, the AI automatically re-calculates the remaining schedule.
 - **Local AI Privacy:** All processing is done locally, ensuring student data remains private.
@@ -73,10 +71,10 @@ Designed for utility management, this sub-module calculates electricity bills ba
 - **Admin Bill Creation:** Authorities can generate and distribute bills electronically.
 - **Payment Integration:** Users can pay their bills using their virtual bank balance.
 
-#### 3.2.4 Password Checker & Generator
-In an era of increasing cyber threats, SmartEduVerse includes tools to ensure user security. The Password Checker analyzes the strength of passwords using complex algorithms, while the Generator creates cryptographically secure passwords.
-- **Strength Analysis:** Checks for entropy, common patterns, and dictionary words.
-- **Secure Generation:** Uses cryptographically secure random number generators.
+#### 3.2.4 Password  Generator and Password Manager
+In an era of increasing cyber threats, SmartEduVerse includes tools to ensure user security. The Password Generator creates cryptographically secure passwords.The saved Passwords are shown on the main Menu.
+- **App Basis Generation:** Lets the user select the app and generate password for that app and the user can select the app to  update the password or set their own password .
+- **Secure Generation:** Uses cryptographically secure random number generators and everything from the the length to the characters used is customizable .
 - **Education:** Teaches users what makes a password truly secure.
 
 ### 3.3 Management Module
@@ -131,13 +129,13 @@ The Quiz engine uses AI to generate dynamic questions based on selected topics. 
 A fast-paced mental math challenge that helps users improve their calculation speed and accuracy.
 - **Timed Challenges:** Race against the clock to solve math problems.
 - **Difficulty Levels:** From basic arithmetic to advanced algebra.
-- **Leaderboards:** Track your progress and compete with others.
+- **Step-By-Step-Explanation:** View the actual way to solve the problem while the AI buddy keeps you Motivated all the way .
 
 #### 3.4.3 Typing Speed Test
 A tool designed to improve typing proficiency. It tracks Words Per Minute (WPM) and accuracy, providing a detailed breakdown of performance at the end of each session.
 - **WPM Tracking:** Measure your typing speed in real-time.
 - **Error Highlighting:** See where you made mistakes and learn from them.
-- **Progressive Difficulty:** Start with simple words and move to complex paragraphs.
+- **Graph Analysis:** See the wpm for start to beginning inthe form of a graph.
 
 #### 3.4.4 Guess the Number
 A classic logic game that helps develop deductive reasoning skills.
@@ -242,11 +240,6 @@ The logic behind the School Management sub-module revolves around the 'Student' 
 **AI Study Planner Implementation:**
 The Study Planner is not just a simple calendar. It uses a 'Prompt Engineering' approach where it gathers data about the student's current progress, identifies gaps in knowledge using the 'Result Analyzer' data, and then sends a structured prompt to the Ollama AI. The AI returns a JSON-formatted schedule which the system then parses and displays in a custom-built calendar view. This integration of local AI ensures that student data never leaves the machine, maintaining absolute privacy.
 
-**Result Analyzer Visuals:**
-The Result Analyzer uses a custom-built 'ChartPanel' that handles all the rendering of bar charts and line graphs. Instead of relying on heavy third-party libraries like JFreeChart, we opted for a lightweight, native Graphics2D implementation. This allows for smooth animations and a consistent black-and-white theme that aligns with the rest of the application. The analyzer calculates several key metrics:
-- **Class Average:** The mean score of all students in a particular subject.
-- **Standard Deviation:** A measure of the spread of marks, helping identify if the exam was too hard or too easy.
-- **Improvement Metric:** A comparison of current marks against previous exams to track individual progress.
 
 ## 10. Deep Dive: Finance Module & Security
 
@@ -262,12 +255,6 @@ The billing engine uses a tiered pricing model:
 - **Above 300 Units:** ₹9.50 / unit
 It also calculates additional surcharges such as fixed service charges, electricity duty, and fuel adjustment charges. The 'BillCalculator' class encapsulates this logic, making it easy to update tariffs without modifying the UI code.
 
-**Security & Password Analysis:**
-The Password Checker uses a multi-factor score:
-1. **Length:** +20 points for 12+ characters.
-2. **Complexity:** +10 points for each character type (Upper, Lower, Number, Special).
-3. **Entropy:** Calculated using the Shannon entropy formula to detect patterns and dictionary words.
-A password is only considered 'Strong' if it scores above 80 points.
 
 ## 11. Deep Dive: Management & Logistics
 
@@ -294,7 +281,7 @@ Developing a Flutter-based mobile application that syncs in real-time with the d
 Moving the 'Virtual Ledger' of the Finance Module to a private blockchain (like Hyperledger Fabric) to ensure 100% transparency and immutability in financial transactions.
 
 ### Phase 3: Advanced AI Models
-Moving beyond Ollama to support remote LLMs (like GPT-4 or Claude) for even more sophisticated study planning and automated grading of student assignments.
+Moving beyond Ollama and Groq to support remote LLMs (like GPT-4 or Claude) for even more sophisticated study planning and automated grading of student assignments.
 
 ### Phase 4: IoT Hardware Ecosystem
 Developing proprietary hardware modules that can be plugged into any USB port to provide 'Plug-and-Play' security for institutions.
